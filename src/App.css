@@ -9,7 +9,8 @@ header {
   justify-content: space-around;
   align-items: center;
   background-color:#379362;
-  border-bottom:3px solid #b73b3b;
+  border-bottom:5px solid #b73b3b;
+  color:white;
 }
 .App-logo {
   height: 40vmin;
