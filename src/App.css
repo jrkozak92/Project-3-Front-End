@@ -1,7 +1,16 @@
-.App {
+body {
   text-align: center;
+  background-color:#68e295;
 }
 
+header {
+  display:flex;
+  flex-flow:row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  background-color:#379362;
+  border-bottom:3px solid #b73b3b;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +44,17 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.container {
+  display:flex;
+  flex-flow:row wrap;
+  justify-content: space-around;
+  align-items: center;
+  width:100%;
+  max-width:1000px;
+}
+
+.card {
+  flex:1 1 30%;
 }
