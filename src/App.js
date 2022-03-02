@@ -107,7 +107,7 @@ const App = () => {
 
           {characters.map((char) => {
             return(
-              editFormId === char._id ? 
+              editFormId === char._id ?
               <div key={char._id} className="card edit-card">
                 <div className="edit-card-content">
                   <h2>Edit {char.name}</h2>
@@ -121,7 +121,7 @@ const App = () => {
                 </div>
               </div>
               :
-              <div key={char._id} className="card character-card" onClick={()=> {handleShowEditForm(char)}}> 
+              <div key={char._id} className="card character-card" onClick={()=> {handleShowEditForm(char)}}>
                 <img src={char.image} className="character-image" />
                 <h3>{char.name}</h3>
                 <h4>Character quote: {char.quote}</h4>
