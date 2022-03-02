@@ -4,12 +4,26 @@ import axios from 'axios'
 
 const App = () => {
   const [characters, setCharacters] = useState([])
+  const [showNewCharacterForm, setShowNewCharacterForm] = useState(false)
+  const [newCharacterName, setNewCharacterName] = useState('')
+  const [newCharacterImage, setNewCharacterImage] = useState('')
+  const [newCharacterQuote, setNewCharacterQuote] = useState('')
 
   // Index request
   const updateAllCharacters = () => {
     axios.get('http://localhost:3000/characters' || 'http://stormy-temple-25752.herokuapp.com/characters').then((response) => {
       setCharacters(response.data)
     })
+  }
+
+  const handleNewCharacterName = (e) => {
+    setNewCharacterName(e.target.value)
+  }
+  const handleNewCharacterImage = (e) => {
+    setNewCharacterImage(e.target.value)
+  }
+  const handleNewCharacterQuote = (e) => {
+    setNewCharacterQuote(e.target.value)
   }
   
   useEffect(()=> {
@@ -22,8 +36,21 @@ const App = () => {
         <h1>Futurama App</h1>
         {/* Conditionally render hamburger menu or full links menu */}
         <button>Hamburger icon</button>
+        <ul>
+          <li onClick={()=> {setShowNewCharacterForm(true)}}>Add New Character</li>
+        </ul>
       </header>
       <main>
+        { showNewCharacterForm ? 
+        <section>
+          <form>
+            Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
+            Image URL: <input type="text" placeholder="image path here" onChange={handleNewCharacterImage}/><br/>
+            Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
+            <input type="submit" value="Add this new character" /><br/>
+          </form>
+        </section> : 
+        null }
         <h2>Section Title (Characters or Eps, whatever)</h2>
         <div className='container'>
           
