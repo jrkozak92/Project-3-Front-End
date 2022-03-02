@@ -29,6 +29,13 @@ const App = () => {
     })
   }
 
+  const handleDeleteCharacter = (char) => {
+    axios.delete(`http://localhost:3000/characters/${char._id}` || `http://stormy-temple-25752.herokuapp.com/characters/${char._id}`)
+    .then(() => {
+      updateAllCharacters()
+    })
+  }
+
   const handleNewCharacterName = (e) => {
     setNewCharacterName(e.target.value)
   }
@@ -77,6 +84,7 @@ const App = () => {
                 <img src={char.image} className="character-image" />
                 <h3>{char.name}</h3>
                 <h4>Character quote: {char.quote}</h4>
+                <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
               </div>
             )}
           )}
