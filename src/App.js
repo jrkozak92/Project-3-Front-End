@@ -18,7 +18,7 @@ const App = () => {
 
   const handleNewCharacterFormSubmit = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:3000/characters' || 'http://stormy-temple-25752.herokuapp.com/characters', 
+    axios.post('http://localhost:3000/characters' || 'http://stormy-temple-25752.herokuapp.com/characters',
     {
       name: newCharacterName,
       image: newCharacterImage,
@@ -38,7 +38,7 @@ const App = () => {
   const handleNewCharacterQuote = (e) => {
     setNewCharacterQuote(e.target.value)
   }
-  
+
   useEffect(()=> {
     updateAllCharacters()
   }, [])
@@ -46,19 +46,20 @@ const App = () => {
   return (
     <div>
       <header>
-        <h1>Futurama App</h1>
+        <img src="./futurama_logo.png" className="logo"/>
+
         {/* Conditionally render hamburger menu or full links menu */}
         <button>Hamburger icon</button>
         <ul>
           <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>
-          { showNewCharacterForm ? `Cancel` : 
+          { showNewCharacterForm ? `Cancel` :
             `Add New Character` }
-          
+
           </li>
         </ul>
       </header>
       <main>
-        { showNewCharacterForm ? 
+        { showNewCharacterForm ?
         <section>
           <form onSubmit={handleNewCharacterFormSubmit}>
             Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
@@ -66,11 +67,12 @@ const App = () => {
             Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
             <input type="submit" value="Add this new character" /><br/>
           </form>
-        </section> : 
+        </section> :
         null }
+
         <h2>Section Title (Characters or Eps, whatever)</h2>
         <div className='container'>
-          
+
           {characters.map((char) => {
             return(
                 <div key={char._id} className="card character-card">
