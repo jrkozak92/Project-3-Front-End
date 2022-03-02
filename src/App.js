@@ -8,6 +8,9 @@ const App = () => {
   const [newCharacterName, setNewCharacterName] = useState('')
   const [newCharacterImage, setNewCharacterImage] = useState('')
   const [newCharacterQuote, setNewCharacterQuote] = useState('')
+  const [editCharacterName, setEditCharacterName] = useState('')
+  const [editCharacterImage, setEditCharacterImage] = useState('')
+  const [editCharacterQuote, setEditCharacterQuote] = useState('')
   const [editFormId, setEditFormId] = useState('')
 
   // Index request
@@ -19,7 +22,7 @@ const App = () => {
 
   const handleNewCharacterFormSubmit = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:3000/characters' || 'http://stormy-temple-25752.herokuapp.com/characters', 
+    axios.post('http://localhost:3000/characters' || 'http://stormy-temple-25752.herokuapp.com/characters',
     {
       name: newCharacterName,
       image: newCharacterImage,
@@ -27,6 +30,7 @@ const App = () => {
     })
     .then(()=> {
       updateAllCharacters()
+      setShowNewCharacterForm(false)
     })
   }
 
@@ -46,12 +50,21 @@ const App = () => {
   const handleNewCharacterQuote = (e) => {
     setNewCharacterQuote(e.target.value)
   }
+  const handleEditCharacterName = (e) => {
+    setEditCharacterName(e.target.value)
+  }
+  const handleEditCharacterImage = (e) => {
+    setEditCharacterImage(e.target.value)
+  }
+  const handleEditCharacterQuote = (e) => {
+    setEditCharacterQuote(e.target.value)
+  }
 
   const handleShowEditForm = (char) => {
     setEditFormId(char._id)
-    setNewCharacterName(char.name)
-    setNewCharacterImage(char.image)
-    setNewCharacterQuote(char.quote)
+    setEditCharacterName(char.name)
+    setEditCharacterImage(char.image)
+    setEditCharacterQuote(char.quote)
   }
 
   const handleEditFormCancel = () => {
@@ -78,18 +91,20 @@ const App = () => {
   return (
     <div>
       <header>
-        <h1>Futurama App</h1>
+        <img src="./futurama_logo.png" className="logo"/>
+
         {/* Conditionally render hamburger menu or full links menu */}
         <button>Hamburger icon</button>
         <ul>
           <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>
-          { showNewCharacterForm ? `Cancel` : 
+          { showNewCharacterForm ? `Cancel` :
             `Add New Character` }
+
           </li>
         </ul>
       </header>
       <main>
-        { showNewCharacterForm ? 
+        { showNewCharacterForm ?
         <section>
           <form onSubmit={handleNewCharacterFormSubmit}>
             Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
@@ -97,10 +112,12 @@ const App = () => {
             Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
             <input type="submit" value="Add this new character" /><br/>
           </form>
-        </section> : 
+        </section> :
         null }
+
         <h2>Section Title (Characters or Eps, whatever)</h2>
         <div className='container'>
+
           {characters.map((char) => {
             return(
               editFormId === char._id ? 
@@ -108,9 +125,9 @@ const App = () => {
                 <div className="edit-card-content">
                   <h2>Edit {char.name}</h2>
                   <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
-                    Name: <input type="text" value={newCharacterName} onChange={handleNewCharacterName}/><br/>
-                    Image URL: <input type="text" value={newCharacterImage} onChange={handleNewCharacterImage}/><br/>
-                    Quote: <input type="text" value={newCharacterQuote} onChange={handleNewCharacterQuote}/><br/>
+                    Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
+                    Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
+                    Quote: <input type="text" value={editCharacterQuote} onChange={handleEditCharacterQuote}/><br/>
                     <input type="submit" value="Update this character" /><br/>
                   </form>
                   <button onClick={handleEditFormCancel}>Cancel Edit</button>
