@@ -8,6 +8,7 @@ const App = () => {
   const [newCharacterName, setNewCharacterName] = useState('')
   const [newCharacterImage, setNewCharacterImage] = useState('')
   const [newCharacterQuote, setNewCharacterQuote] = useState('')
+  const [editFormId, setEditFormId] = useState('')
 
   // Index request
   const updateAllCharacters = () => {
@@ -29,6 +30,13 @@ const App = () => {
     })
   }
 
+  const handleDeleteCharacter = (char) => {
+    axios.delete(`http://localhost:3000/characters/${char._id}` || `http://stormy-temple-25752.herokuapp.com/characters/${char._id}`)
+    .then(() => {
+      updateAllCharacters()
+    })
+  }
+
   const handleNewCharacterName = (e) => {
     setNewCharacterName(e.target.value)
   }
@@ -38,7 +46,31 @@ const App = () => {
   const handleNewCharacterQuote = (e) => {
     setNewCharacterQuote(e.target.value)
   }
-  
+
+  const handleShowEditForm = (char) => {
+    setEditFormId(char._id)
+    setNewCharacterName(char.name)
+    setNewCharacterImage(char.image)
+    setNewCharacterQuote(char.quote)
+  }
+
+  const handleEditFormCancel = () => {
+    setEditFormId('')
+  }
+
+  const handleEditFormSubmit = (char, e) => {
+    e.preventDefault()
+    axios.put(`http://localhost:3000/characters/${char._id}` || `http://stormy-temple-25752.herokuapp.com/characters/${char._id}`, {
+      name: newCharacterName,
+      image: newCharacterImage,
+      quote: newCharacterQuote
+    })
+    .then(() => {
+      updateAllCharacters()
+      setEditFormId('')
+    })
+  }
+
   useEffect(()=> {
     updateAllCharacters()
   }, [])
@@ -53,7 +85,6 @@ const App = () => {
           <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>
           { showNewCharacterForm ? `Cancel` : 
             `Add New Character` }
-          
           </li>
         </ul>
       </header>
@@ -70,13 +101,27 @@ const App = () => {
         null }
         <h2>Section Title (Characters or Eps, whatever)</h2>
         <div className='container'>
-          
           {characters.map((char) => {
             return(
-                <div key={char._id} className="card character-card">
+              editFormId === char._id ? 
+              <div key={char._id} className="card edit-card">
+                <div className="edit-card-content">
+                  <h2>Edit {char.name}</h2>
+                  <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
+                    Name: <input type="text" value={newCharacterName} onChange={handleNewCharacterName}/><br/>
+                    Image URL: <input type="text" value={newCharacterImage} onChange={handleNewCharacterImage}/><br/>
+                    Quote: <input type="text" value={newCharacterQuote} onChange={handleNewCharacterQuote}/><br/>
+                    <input type="submit" value="Update this character" /><br/>
+                  </form>
+                  <button onClick={handleEditFormCancel}>Cancel Edit</button>
+                </div>
+              </div>
+              :
+              <div key={char._id} className="card character-card" onClick={()=> {handleShowEditForm(char)}}> 
                 <img src={char.image} className="character-image" />
                 <h3>{char.name}</h3>
                 <h4>Character quote: {char.quote}</h4>
+                <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
               </div>
             )}
           )}
