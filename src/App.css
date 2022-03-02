@@ -9,8 +9,15 @@ header {
   justify-content: space-around;
   align-items: center;
   background-color:#379362;
-  border-bottom:3px solid #b73b3b;
+  border-bottom:5px solid #b73b3b;
+  color:white;
 }
+
+.logo {
+  padding-top:30px;
+  width:70%;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -53,8 +60,11 @@ header {
   align-items: center;
   width:100%;
   max-width:1000px;
+  gap:1em;
 }
 
 .card {
   flex:1 1 30%;
+  border:3px solid #e7d767;
+  box-shadow:3px 3px 3px #b73b3b;
 }
