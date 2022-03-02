@@ -116,7 +116,7 @@ const App = () => {
         null }
 
         <h2>Section Title (Characters or Eps, whatever)</h2>
-        <div className='container'>
+        <div className='container row'>
 
           {characters.map((char) => {
             return(
@@ -134,7 +134,7 @@ const App = () => {
                 </div>
               </div>
               :
-              <div key={char._id} className="card character-card" onClick={()=> {handleShowEditForm(char)}}>
+              <div key={char._id} className="card col s12 m6 l4 xl3 character-card" onClick={()=> {handleShowEditForm(char)}}>
                 <img src={char.image} className="character-image" />
                 <h3>{char.name}</h3>
                 <h4>Character quote: {char.quote}</h4>
