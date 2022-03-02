@@ -8,6 +8,7 @@ const App = () => {
   const [newCharacterName, setNewCharacterName] = useState('')
   const [newCharacterImage, setNewCharacterImage] = useState('')
   const [newCharacterQuote, setNewCharacterQuote] = useState('')
+  const [editFormId, setEditFormId] = useState('')
 
   // Index request
   const updateAllCharacters = () => {
@@ -45,7 +46,14 @@ const App = () => {
   const handleNewCharacterQuote = (e) => {
     setNewCharacterQuote(e.target.value)
   }
-  
+
+  const handleShowEditForm = (char) => {
+    setEditFormId(char._id)
+    setNewCharacterName(char.name)
+    setNewCharacterImage(char.image)
+    setNewCharacterQuote(char.quote)
+  }
+
   useEffect(()=> {
     updateAllCharacters()
   }, [])
@@ -77,10 +85,22 @@ const App = () => {
         null }
         <h2>Section Title (Characters or Eps, whatever)</h2>
         <div className='container'>
-          
           {characters.map((char) => {
             return(
-                <div key={char._id} className="card character-card">
+              editFormId === char._id ? 
+              <div key={char._id} className="modal">
+                <div className="modal-content">
+                  <h2>Edit {char.name}</h2>
+                  <form>
+                    Name: <input type="text" value={newCharacterName} onChange={handleNewCharacterName}/><br/>
+                    Image URL: <input type="text" value={newCharacterImage} onChange={handleNewCharacterImage}/><br/>
+                    Quote: <input type="text" value={newCharacterQuote} onChange={handleNewCharacterQuote}/><br/>
+                    <input type="submit" value="Update this character" /><br/>
+                  </form>
+                </div>
+              </div>
+              :
+              <div key={char._id} className="card character-card" onClick={()=> {handleShowEditForm(char)}}> 
                 <img src={char.image} className="character-image" />
                 <h3>{char.name}</h3>
                 <h4>Character quote: {char.quote}</h4>
