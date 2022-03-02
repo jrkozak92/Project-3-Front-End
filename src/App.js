@@ -1,25 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
+import {useState, useEffect} from 'react'
+import axios from 'axios'
 
-function App() {
+const App = () => {
+  const [characters, setCharacters] = useState([])
+
+  // Index request
+  const updateAllCharacters = () => {
+    axios.get('http://localhost:3000/characters' || 'http://stormy-temple-25752.herokuapp.com/characters').then((response) => {
+      setCharacters(response.data)
+    })
+  }
+  
+  useEffect(()=> {
+    updateAllCharacters()
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div>
+      <header>
+        <h1>Futurama App</h1>
+        {/* Conditionally render hamburger menu or full links menu */}
+        <button>Hamburger icon</button>
       </header>
+      <main>
+        <h2>Section Title (Characters or Eps, whatever)</h2>
+        <div className='container'>
+          
+          {characters.map((char) => {
+            return(
+                <div key={char._id} className="card character-card">
+                <img src={char.image} className="character-image" />
+                <h3>{char.name}</h3>
+                <h4>Character quote: {char.quote}</h4>
+              </div>
+            )}
+          )}
+        </div>
+      </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
