@@ -50,7 +50,11 @@ const App = () => {
         {/* Conditionally render hamburger menu or full links menu */}
         <button>Hamburger icon</button>
         <ul>
-          <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Add New Character</li>
+          <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>
+          { showNewCharacterForm ? `Cancel` : 
+            `Add New Character` }
+          
+          </li>
         </ul>
       </header>
       <main>
