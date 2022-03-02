@@ -8,6 +8,9 @@ const App = () => {
   const [newCharacterName, setNewCharacterName] = useState('')
   const [newCharacterImage, setNewCharacterImage] = useState('')
   const [newCharacterQuote, setNewCharacterQuote] = useState('')
+  const [editCharacterName, setEditCharacterName] = useState('')
+  const [editCharacterImage, setEditCharacterImage] = useState('')
+  const [editCharacterQuote, setEditCharacterQuote] = useState('')
   const [editFormId, setEditFormId] = useState('')
 
   // Index request
@@ -27,6 +30,7 @@ const App = () => {
     })
     .then(()=> {
       updateAllCharacters()
+      setShowNewCharacterForm(false)
     })
   }
 
@@ -46,12 +50,21 @@ const App = () => {
   const handleNewCharacterQuote = (e) => {
     setNewCharacterQuote(e.target.value)
   }
+  const handleEditCharacterName = (e) => {
+    setEditCharacterName(e.target.value)
+  }
+  const handleEditCharacterImage = (e) => {
+    setEditCharacterImage(e.target.value)
+  }
+  const handleEditCharacterQuote = (e) => {
+    setEditCharacterQuote(e.target.value)
+  }
 
   const handleShowEditForm = (char) => {
     setEditFormId(char._id)
-    setNewCharacterName(char.name)
-    setNewCharacterImage(char.image)
-    setNewCharacterQuote(char.quote)
+    setEditCharacterName(char.name)
+    setEditCharacterImage(char.image)
+    setEditCharacterQuote(char.quote)
   }
 
   const handleEditFormCancel = () => {
@@ -112,9 +125,9 @@ const App = () => {
                 <div className="edit-card-content">
                   <h2>Edit {char.name}</h2>
                   <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
-                    Name: <input type="text" value={newCharacterName} onChange={handleNewCharacterName}/><br/>
-                    Image URL: <input type="text" value={newCharacterImage} onChange={handleNewCharacterImage}/><br/>
-                    Quote: <input type="text" value={newCharacterQuote} onChange={handleNewCharacterQuote}/><br/>
+                    Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
+                    Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
+                    Quote: <input type="text" value={editCharacterQuote} onChange={handleEditCharacterQuote}/><br/>
                     <input type="submit" value="Update this character" /><br/>
                   </form>
                   <button onClick={handleEditFormCancel}>Cancel Edit</button>
