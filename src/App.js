@@ -16,6 +16,19 @@ const App = () => {
     })
   }
 
+  const handleNewCharacterFormSubmit = (e) => {
+    e.preventDefault()
+    axios.post('http://localhost:3000/characters' || 'http://stormy-temple-25752.herokuapp.com/characters', 
+    {
+      name: newCharacterName,
+      image: newCharacterImage,
+      quote: newCharacterQuote
+    })
+    .then(()=> {
+      updateAllCharacters()
+    })
+  }
+
   const handleNewCharacterName = (e) => {
     setNewCharacterName(e.target.value)
   }
@@ -37,13 +50,13 @@ const App = () => {
         {/* Conditionally render hamburger menu or full links menu */}
         <button>Hamburger icon</button>
         <ul>
-          <li onClick={()=> {setShowNewCharacterForm(true)}}>Add New Character</li>
+          <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Add New Character</li>
         </ul>
       </header>
       <main>
         { showNewCharacterForm ? 
         <section>
-          <form>
+          <form onSubmit={handleNewCharacterFormSubmit}>
             Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
             Image URL: <input type="text" placeholder="image path here" onChange={handleNewCharacterImage}/><br/>
             Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
