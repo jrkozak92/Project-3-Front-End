@@ -15,14 +15,14 @@ const App = () => {
 
   // Index request
   const updateAllCharacters = () => {
-    axios.get('http://localhost:3000/characters' || 'http://stormy-temple-25752.herokuapp.com/characters').then((response) => {
+    axios.get('http://stormy-temple-25752.herokuapp.com/characters').then((response) => {
       setCharacters(response.data)
     })
   }
 
   const handleNewCharacterFormSubmit = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:3000/characters' || 'http://stormy-temple-25752.herokuapp.com/characters',
+    axios.post('http://stormy-temple-25752.herokuapp.com/characters',
     {
       name: newCharacterName,
       image: newCharacterImage,
@@ -35,7 +35,7 @@ const App = () => {
   }
 
   const handleDeleteCharacter = (char) => {
-    axios.delete(`http://localhost:3000/characters/${char._id}` || `http://stormy-temple-25752.herokuapp.com/characters/${char._id}`)
+    axios.delete(`http://stormy-temple-25752.herokuapp.com/characters/${char._id}`)
     .then(() => {
       updateAllCharacters()
     })
@@ -73,7 +73,7 @@ const App = () => {
 
   const handleEditFormSubmit = (char, e) => {
     e.preventDefault()
-    axios.put(`http://localhost:3000/characters/${char._id}` || `http://stormy-temple-25752.herokuapp.com/characters/${char._id}`, {
+    axios.put(`http://stormy-temple-25752.herokuapp.com/characters/${char._id}`, {
       name: newCharacterName,
       image: newCharacterImage,
       quote: newCharacterQuote
