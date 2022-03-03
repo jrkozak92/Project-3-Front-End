@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   text-align: center;
   background-color:#68e295;
@@ -17,6 +21,7 @@ header {
   background-color:#379362;
   border-bottom:5px solid #b73b3b;
   color:white;
+  max-height: 15vh;
 }
 
 .logo {
@@ -81,9 +86,35 @@ header {
 }
 
 .episode-modal-content {
-  width: 60%;
+  width: 70%;
+  padding: 1em;
   background-color: #c32040;
   border: 3px solid #e7d767;
   border-radius: 10px;
   box-shadow:3px 3px 3px #b73b3b;
+}
+
+a {
+  color: white;
+}
+
+.material-icons {
+  font-size: 25px;
+}
+
+#menu-content {
+  width: 80%;
+  position: fixed;
+  right: -80%;
+  top: 15vh;
+  z-index: 1;
+  background-color: #f68021;
+  padding: 1em;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px purple;
+}
+
+#menu-content li {
+  margin: 0.5em auto;
 }
