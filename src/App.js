@@ -4,7 +4,6 @@ import axios from 'axios'
 
 const App = () => {
   const [characters, setCharacters] = useState([])
-  const [episodes, setEpisodes] = useState([])
   const [showNewCharacterForm, setShowNewCharacterForm] = useState(false)
   const [newCharacterName, setNewCharacterName] = useState('')
   const [newCharacterImage, setNewCharacterImage] = useState('')
@@ -13,25 +12,13 @@ const App = () => {
   const [editCharacterImage, setEditCharacterImage] = useState('')
   const [editCharacterQuote, setEditCharacterQuote] = useState('')
   const [editFormId, setEditFormId] = useState('')
-
+  const [episodes, setEpisodes] = useState([])
+  const [showEpisodeInfo, setShowEpisodeInfo] = useState(0)
 
   // Index request
   const updateAllCharacters = () => {
     axios.get('https://stormy-temple-25752.herokuapp.com/characters').then((response) => {
       setCharacters(response.data)
-    })
-  }
-
-  const getEpisodes = () => {
-    axios.get('https://stormy-temple-25752.herokuapp.com/episodes').then((response) => {
-      const rawData = response.data
-      rawData.sort((a,b) => {
-        if (a.id > b.id) return 1
-        if (a.id < b.id) return -1
-        return 0
-      })
-    
-      setEpisodes(rawData)
     })
   }
 
@@ -97,6 +84,26 @@ const App = () => {
       updateAllCharacters()
       setEditFormId('')
     })
+  }
+
+  const getEpisodes = () => {
+    axios.get('https://stormy-temple-25752.herokuapp.com/episodes').then((response) => {
+      const rawData = response.data
+      rawData.sort((a,b) => {
+        if (a.id > b.id) return 1
+        if (a.id < b.id) return -1
+        return 0
+      })
+      setEpisodes(rawData)
+    })
+  }
+
+  const handleShowEpInfo = (ep) => {
+    setShowEpisodeInfo(ep.id)
+  }
+
+  const handleCloseEpisodeInfo = () => {
+    setShowEpisodeInfo(0)
   }
 
   useEffect(()=> {
@@ -177,10 +184,26 @@ const App = () => {
                 <tbody>
                   {episodes.map((ep) => {
                     return (
-                      <tr key={ep._id}>
-                        <td>{ep.episodeNum}</td>
-                        <td>{ep.title}</td>
-                      </tr>
+                      <>
+                        {
+                          showEpisodeInfo === ep.id ?
+                          <div key={ep.id} className="episode-modal">
+                            <div className="episode-modal-content">
+                              <h4>{ep.title}</h4>
+                              <h5>{ep.episodeNum}</h5>
+                              <h5>{ep.writers}</h5>
+                              <h5>{ep.airdate}</h5>
+                              <h5>{ep.description}</h5>
+                              <button onClick={handleCloseEpisodeInfo}>Back</button>
+                            </div>
+                          </div>
+                          :
+                          <tr key={ep._id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
+                            <td>{ep.episodeNum}</td>
+                            <td>{ep.title}</td>
+                          </tr>
+                        }
+                      </>
                     )
                   })}
                 </tbody>
