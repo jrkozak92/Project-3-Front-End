@@ -74,9 +74,9 @@ const App = () => {
   const handleEditFormSubmit = (char, e) => {
     e.preventDefault()
     axios.put(`http://stormy-temple-25752.herokuapp.com/characters/${char._id}`, {
-      name: newCharacterName,
-      image: newCharacterImage,
-      quote: newCharacterQuote
+      name: editCharacterName,
+      image: editCharacterImage,
+      quote: editCharacterQuote
     })
     .then(() => {
       updateAllCharacters()
@@ -134,11 +134,13 @@ const App = () => {
                 </div>
               </div>
               :
-              <div key={char._id} className="card col s12 m6 l4 xl3 character-card" onClick={()=> {handleShowEditForm(char)}}>
-                <img src={char.image} className="character-image" />
-                <h3>{char.name}</h3>
-                <h4>Character quote: {char.quote}</h4>
-                <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
+              <div key={char._id} className="col s12 m6 l4 xl3">
+                <div  className="card character-card" onClick={()=> {handleShowEditForm(char)}}>
+                  <img src={char.image} className="character-image" />
+                  <h3>{char.name}</h3>
+                  <h4>Character quote: {char.quote}</h4>
+                  <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
+                </div>
               </div>
             )}
           )}
