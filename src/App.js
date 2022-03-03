@@ -23,7 +23,7 @@ const App = () => {
   }
 
   const getEpisodes = () => {
-    axios.get('http://stormy-temple-25752.herokuapp.com/episodes').then((response) => {
+    axios.get('https://stormy-temple-25752.herokuapp.com/episodes').then((response) => {
       const rawData = response.data
       rawData.sort((a,b) => {
         if (a.id > b.id) return 1
