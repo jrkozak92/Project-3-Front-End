@@ -74,9 +74,9 @@ const App = () => {
   const handleEditFormSubmit = (char, e) => {
     e.preventDefault()
     axios.put(`https://stormy-temple-25752.herokuapp.com/characters/${char._id}`, {
-      name: newCharacterName,
-      image: newCharacterImage,
-      quote: newCharacterQuote
+      name: editCharacterName,
+      image: editCharacterImage,
+      quote: editCharacterQuote
     })
     .then(() => {
       updateAllCharacters()
