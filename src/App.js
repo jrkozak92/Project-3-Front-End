@@ -4,6 +4,7 @@ import axios from 'axios'
 
 const App = () => {
   const [characters, setCharacters] = useState([])
+  const [episodes, setEpisodes] = useState([])
   const [showNewCharacterForm, setShowNewCharacterForm] = useState(false)
   const [newCharacterName, setNewCharacterName] = useState('')
   const [newCharacterImage, setNewCharacterImage] = useState('')
@@ -13,10 +14,24 @@ const App = () => {
   const [editCharacterQuote, setEditCharacterQuote] = useState('')
   const [editFormId, setEditFormId] = useState('')
 
+
   // Index request
   const updateAllCharacters = () => {
     axios.get('http://stormy-temple-25752.herokuapp.com/characters').then((response) => {
       setCharacters(response.data)
+    })
+  }
+
+  const getEpisodes = () => {
+    axios.get('http://localhost:3000/episodes').then((response) => {
+      const rawData = response.data
+      rawData.sort((a,b) => {
+        if (a.id > b.id) return 1
+        if (a.id < b.id) return -1
+        return 0
+      })
+    
+      setEpisodes(rawData)
     })
   }
 
@@ -86,6 +101,7 @@ const App = () => {
 
   useEffect(()=> {
     updateAllCharacters()
+    getEpisodes()
   }, [])
 
   return (
@@ -114,37 +130,63 @@ const App = () => {
           </form>
         </section> :
         null }
+        <section id="characters-section">
+          <h2>Hot Diggity Daffodil! Meet the characters of <em>Futurama</em>!</h2>
+          <div className='container row'>
 
-        <h2>Section Title (Characters or Eps, whatever)</h2>
-        <div className='container row'>
-
-          {characters.map((char) => {
-            return(
-              editFormId === char._id ?
-              <div key={char._id} className="card edit-card">
-                <div className="edit-card-content">
-                  <h2>Edit {char.name}</h2>
-                  <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
-                    Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
-                    Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
-                    Quote: <input type="text" value={editCharacterQuote} onChange={handleEditCharacterQuote}/><br/>
-                    <input type="submit" value="Update this character" /><br/>
-                  </form>
-                  <button onClick={handleEditFormCancel}>Cancel Edit</button>
+            {characters.map((char) => {
+              return(
+                editFormId === char._id ?
+                <div key={char._id} className="col s12 m6 l4 xl3">
+                  <div  className="card edit-card">
+                    <div className="edit-card-content">
+                      <h2>Edit {char.name}</h2>
+                      <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
+                        Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
+                        Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
+                        Quote: <input type="text" value={editCharacterQuote} onChange={handleEditCharacterQuote}/><br/>
+                        <input type="submit" value="Update this character" /><br/>
+                      </form>
+                      <button onClick={handleEditFormCancel}>Cancel Edit</button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              :
-              <div key={char._id} className="col s12 m6 l4 xl3">
-                <div  className="card character-card" onClick={()=> {handleShowEditForm(char)}}>
-                  <img src={char.image} className="character-image" />
-                  <h3>{char.name}</h3>
-                  <h4>Character quote: {char.quote}</h4>
-                  <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
+                :
+                <div key={char._id} className="col s12 m6 l4 xl3">
+                  <div  className="card character-card hoverable" onClick={()=> {handleShowEditForm(char)}}>
+                    <img src={char.image} className="character-image responsive-img" />
+                    <h3>{char.name}</h3>
+                    <h4>Character quote: {char.quote}</h4>
+                    <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
+                  </div>
                 </div>
-              </div>
+              )}
             )}
-          )}
-        </div>
+          </div>
+        </section>
+        <section id="episodes-section">
+          <h2>Futurama Episode Information</h2>
+            <div className="container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Episode</th>
+                    <th>Title</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {episodes.map((ep) => {
+                    return (
+                      <tr key={ep._id}>
+                        <td>{ep.episodeNum}</td>
+                        <td>{ep.title}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+        </section>
       </main>
     </div>
   )
