@@ -106,6 +106,15 @@ const App = () => {
     setShowEpisodeInfo(0)
   }
 
+  const handleToggleNavMenu = () => {
+    const menuEl = document.getElementById('menu-content')
+    if(menuEl.style.right === "0px") {
+      menuEl.style.right = "-80%"
+    } else {
+      menuEl.style.right = "0px"
+    }
+  }
+
   useEffect(()=> {
     updateAllCharacters()
     getEpisodes()
@@ -117,14 +126,16 @@ const App = () => {
         <img src="./futurama_logo.png" className="logo"/>
 
         {/* Conditionally render hamburger menu or full links menu */}
-        <button>Hamburger icon</button>
-        <ul>
-          <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>
-          { showNewCharacterForm ? `Cancel` :
-            `Add New Character` }
-
-          </li>
-        </ul>
+        
+          <div id="menu-content">
+            <ul>
+              <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm); handleToggleNavMenu()}}>
+                Add New Character 
+              </li>
+              <li><a href="#episodes-section">List of Episodes</a></li>
+            </ul>
+          </div>
+        <a href="#" className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></a>
       </header>
       <main>
         { showNewCharacterForm ?
@@ -135,6 +146,7 @@ const App = () => {
             Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
             <input type="submit" value="Add this new character" /><br/>
           </form>
+          <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm); handleToggleNavMenu()}}>Cancel</button>
         </section> :
         null }
         <section id="characters-section">
@@ -198,7 +210,7 @@ const App = () => {
                             </div>
                           </div>
                           :
-                          <tr key={ep._id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
+                          <tr key={ep.id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
                             <td>{ep.episodeNum}</td>
                             <td>{ep.title}</td>
                           </tr>
