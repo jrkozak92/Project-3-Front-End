@@ -67,3 +67,23 @@ header {
   border:3px solid #e7d767;
   box-shadow:3px 3px 3px #b73b3b;
 }
+
+.episode-modal {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  z-index: 99;
+  background: rgba(0,0,0,0.4);
+}
+
+.episode-modal-content {
+  width: 60%;
+  background-color: #c32040;
+  border: 3px solid #e7d767;
+  border-radius: 10px;
+  box-shadow:3px 3px 3px #b73b3b;
+}
