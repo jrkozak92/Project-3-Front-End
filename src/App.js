@@ -115,28 +115,30 @@ const App = () => {
         </section> :
         null }
 
-        <h2>Section Title (Characters or Eps, whatever)</h2>
+        <h2>Hot Diggity Daffodil! Meet the characters of <em>Futurama</em>!</h2>
         <div className='container row'>
 
           {characters.map((char) => {
             return(
               editFormId === char._id ?
-              <div key={char._id} className="card edit-card">
-                <div className="edit-card-content">
-                  <h2>Edit {char.name}</h2>
-                  <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
-                    Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
-                    Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
-                    Quote: <input type="text" value={editCharacterQuote} onChange={handleEditCharacterQuote}/><br/>
-                    <input type="submit" value="Update this character" /><br/>
-                  </form>
-                  <button onClick={handleEditFormCancel}>Cancel Edit</button>
+              <div key={char._id} className="col s12 m6 l4 xl3">
+                <div  className="card edit-card">
+                  <div className="edit-card-content">
+                    <h2>Edit {char.name}</h2>
+                    <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
+                      Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
+                      Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
+                      Quote: <input type="text" value={editCharacterQuote} onChange={handleEditCharacterQuote}/><br/>
+                      <input type="submit" value="Update this character" /><br/>
+                    </form>
+                    <button onClick={handleEditFormCancel}>Cancel Edit</button>
+                  </div>
                 </div>
               </div>
               :
               <div key={char._id} className="col s12 m6 l4 xl3">
-                <div  className="card character-card" onClick={()=> {handleShowEditForm(char)}}>
-                  <img src={char.image} className="character-image" />
+                <div  className="card character-card hoverable" onClick={()=> {handleShowEditForm(char)}}>
+                  <img src={char.image} className="character-image responsive-img" />
                   <h3>{char.name}</h3>
                   <h4>Character quote: {char.quote}</h4>
                   <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
