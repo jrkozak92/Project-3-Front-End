@@ -165,7 +165,7 @@ const App = () => {
                 <div key={char._id} className="col s12 m6 l4 xl3">
                   <div  className="card edit-card">
                     <div className="edit-card-content">
-                      <h2>Edit {char.name}</h2>
+                      <h3>Edit {char.name}</h3>
                       <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
                         Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
                         Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
@@ -181,7 +181,7 @@ const App = () => {
                   <div  className="card character-card hoverable" onClick={()=> {handleShowEditForm(char)}}>
                     <img src={char.image} className="character-image responsive-img" />
                     <h3>{char.name}</h3>
-                    <h4>Character quote: {char.quote}</h4>
+                    <h6>Character quote: {char.quote}</h6>
                     <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
                   </div>
                 </div>

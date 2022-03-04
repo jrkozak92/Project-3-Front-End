@@ -75,6 +75,14 @@ header {
   box-shadow:3px 3px 3px #b73b3b;
 }
 
+.edit-card-content {
+  padding: 1.5em;
+}
+
+.character-image {
+  max-height: 300px;
+}
+
 .whole-modal {
   height: 100%;
   width: 100%;
