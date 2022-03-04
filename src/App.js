@@ -14,22 +14,35 @@ const App = () => {
   const [editFormId, setEditFormId] = useState('')
   const [episodes, setEpisodes] = useState([])
   const [showEpisodeInfo, setShowEpisodeInfo] = useState(0)
+
+  const [toggleLogin, setToggleLogin] = useState(true)
+  const [toggleError, setToggleError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [toggleLogout, setToggleLogout] = useState(false)
+  const [currentUser, setCurrentUser] = useState({})
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
   const [selectedEp, setSelectedEp] = useState({})
 
+
   // Index request
+  //https://stormy-temple-25752.herokuapp.com
   const updateAllCharacters = () => {
-    axios.get('https://stormy-temple-25752.herokuapp.com/characters').then((response) => {
+    axios.get('http://localhost:3000/characters').then((response) => {
       setCharacters(response.data)
     })
   }
 
+//https://stormy-temple-25752.herokuapp.com
   const handleNewCharacterFormSubmit = (e) => {
     e.preventDefault()
-    axios.post('https://stormy-temple-25752.herokuapp.com/characters',
+    axios.post('http://localhost:3000/characters',
     {
       name: newCharacterName,
       image: newCharacterImage,
-      quote: newCharacterQuote
+      quote: newCharacterQuote,
     })
     .then(()=> {
       updateAllCharacters()
@@ -37,8 +50,9 @@ const App = () => {
     })
   }
 
+//https://stormy-temple-25752.herokuapp.com
   const handleDeleteCharacter = (char) => {
-    axios.delete(`https://stormy-temple-25752.herokuapp.com/characters/${char._id}`)
+    axios.delete(`http://localhost:3000/characters/${char._id}`)
     .then(() => {
       updateAllCharacters()
     })
@@ -74,9 +88,11 @@ const App = () => {
     setEditFormId('')
   }
 
+
+//https://stormy-temple-25752.herokuapp.com
   const handleEditFormSubmit = (char, e) => {
     e.preventDefault()
-    axios.put(`https://stormy-temple-25752.herokuapp.com/characters/${char._id}`, {
+    axios.put(`http://localhost:3000/characters/${char._id}`, {
       name: editCharacterName,
       image: editCharacterImage,
       quote: editCharacterQuote
@@ -86,9 +102,9 @@ const App = () => {
       setEditFormId('')
     })
   }
-
+//https://stormy-temple-25752.herokuapp.com
   const getEpisodes = () => {
-    axios.get('https://stormy-temple-25752.herokuapp.com/episodes').then((response) => {
+    axios.get('http://localhost:3000/episodes').then((response) => {
       const rawData = response.data
       rawData.sort((a,b) => {
         if (a.id > b.id) return 1
@@ -120,6 +136,82 @@ const App = () => {
     }
   }
 
+//https://stormy-temple-25752.herokuapp.com
+  const handleCreateUser = (event) => {
+    event.preventDefault()
+    event.currentTarget.reset()
+    let userObj = {
+      username: username,
+      password: password
+    }
+    setUsername('')
+    setPassword('')
+    axios.post('http://localhost:3000/users', userObj)
+      .then((response) => {
+        if (response.data.username) {
+          console.log(response.data);
+          setToggleError(false)
+          setErrorMessage('')
+          setCurrentUser(response.data)
+          handleToggleLogout()
+        } else {
+          setErrorMessage(response.data)
+          setToggleError(true)
+        }
+      })
+  }
+
+  const handleLogin = (event) => {
+    event.preventDefault()
+    event.currentTarget.reset()
+    let userObj = {
+      username: username,
+      password: password
+    }
+    setUsername('')
+    setPassword('')
+    axios.post('http://localhost:3000/sessions', userObj)
+      .then((response) => {
+        if (response.data.username) {
+          console.log(response.data)
+          setToggleError(false)
+          setErrorMessage('')
+          setCurrentUser(response.data)
+          handleToggleLogout()
+        } else {
+          console.log(response);
+          setToggleError(true)
+          setErrorMessage(response.data)
+        }
+      }
+    ).then(() => {
+      updateAllCharacters()
+      getEpisodes()
+    })
+  }
+
+  const handleLogout = () => {
+    setCurrentUser({})
+    handleToggleLogout()
+  }
+
+  const handleToggleLoginForm = () => {
+    setToggleError(false)
+    if (toggleLogin === true) {
+      setToggleLogin(false)
+    } else {
+      setToggleLogin(true)
+    }
+  }
+
+  const handleToggleLogout = () => {
+    if (toggleLogout) {
+      setToggleLogout(false)
+    } else {
+      setToggleLogout(true)
+    }
+  }
+
   useEffect(()=> {
     updateAllCharacters()
     getEpisodes()
@@ -131,7 +223,7 @@ const App = () => {
         <img src="./futurama_logo.png" className="logo"/>
 
         {/* Conditionally render hamburger menu or full links menu */}
-        
+
           <div id="menu-content">
             { showNewCharacterForm ?
             <section>
@@ -144,91 +236,134 @@ const App = () => {
               <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Cancel</button>
             </section> :
             <ul>
-              <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>
-                Add New Character 
+              <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm); handleToggleNavMenu()}}>
+                Add New Character
               </li>
               <li onClick={handleToggleNavMenu}><a href="#episodes-section">List of Episodes</a></li>
-            </ul> 
+              <li>
+              {toggleLogout ?
+                <button onClick={handleLogout}>Logout</button> :
+                <>
+                  { toggleLogin ?
+                    <form onSubmit={handleLogin}>
+                      <input type="text" placeholder="Username" onChange={(event) => {setUsername(event.target.value)}}/>
+                      <input type="password" placeholder="Password" onChange={(event) => { setPassword(event.target.value) }}/>
+                      {toggleError ?
+                        <h5>{errorMessage}</h5>
+                          :
+                        null
+                      }
+                      <input type="submit" value="Login"/>
+                    </form>
+                    :
+                    <form onSubmit={handleCreateUser}>
+                      <input type="text" placeholder="Username" onChange={(event) => {setUsername(event.target.value)}}/>
+                      <input type="password" placeholder="Password" onChange={(event) => {setPassword(event.target.value)}}/>
+                      {toggleError ?
+                        <h5>{errorMessage}</h5>
+                          :
+                        null
+                      }
+                      <input type="submit" value="Create Account"/>
+                    </form>
+                  }
+                <button onClick={handleToggleLoginForm}>{toggleLogin ? 'Need an Account?' : 'Already have an account?'}</button>
+                </>
+              }
+              </li>
+            </ul>
             }
-            
           </div>
         <a href="#" className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></a>
       </header>
       <main>
-        <section id="characters-section">
-          <h2>Hot Diggity Daffodil! Meet the characters of <em>Futurama</em>!</h2>
-          <div className='container row'>
-
-            {characters.map((char) => {
-              return(
-                editFormId === char._id ?
-                <div key={char._id} className="col s12 m6 l4 xl3">
-                  <div  className="card edit-card">
-                    <div className="edit-card-content">
-                      <h3>Edit {char.name}</h3>
-                      <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
-                        Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
-                        Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
-                        Quote: <input type="text" value={editCharacterQuote} onChange={handleEditCharacterQuote}/><br/>
-                        <input type="submit" value="Update this character" /><br/>
-                      </form>
-                      <button onClick={handleEditFormCancel}>Cancel Edit</button>
-                    </div>
-                  </div>
-                </div>
-                :
-                <div key={char._id} className="col s12 m6 l4 xl3">
-                  <div  className="card character-card hoverable" onClick={()=> {handleShowEditForm(char)}}>
-                    <img src={char.image} className="character-image responsive-img" />
-                    <h3>{char.name}</h3>
-                    <h6>Character quote: {char.quote}</h6>
-                    <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
-                  </div>
-                </div>
-              )}
-            )}
-          </div>
-        </section>
-        <section id="episodes-section">
-          <h2>Futurama Episode Information</h2>
-            <div className="container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Episode</th>
-                    <th>Title</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {episodes.map((ep) => {
-                    return (
-                      <tr key={ep.id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
-                        <td>{ep.episodeNum}</td>
-                        <td>{ep.title}</td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-            {
-            showEpisodeInfo === selectedEp.id ?
-              <div className="whole-modal">
-                <div className="episode-modal" onClick={handleCloseEpisodeInfo}>
-                </div>
-                <div className="episode-modal-content">
-                  <h4>{selectedEp.title}</h4>
-                  <h5>Ep No. {selectedEp.episodeNum}</h5>
-                  <h5>Written by {selectedEp.writers}</h5>
-                  <h5>Original Air Date {selectedEp.airdate}</h5>
-                  <p>{selectedEp.description}</p>
-                  <button onClick={handleCloseEpisodeInfo}>Back</button>
-                </div>
-              </div>
+        {!currentUser.username ?
+          <>
+            <h2>Please Login to View Content</h2>
+          </>
             :
-            null
-            }
-        </section>
+          <>
+            <section id="characters-section">
+              <h2>Hot Diggity Daffodil! Meet the characters of <em>Futurama</em>!</h2>
+              <div className='container row'>
+              { characters ?
+                <>
+                {characters.map((char) => {
+                  return(
+                    editFormId === char._id ?
+                    <div key={char._id} className="col s12 m6 l4 xl3">
+                      <div  className="card edit-card">
+                        <div className="edit-card-content">
+                          <h2>Edit {char.name}</h2>
+                          <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
+                            Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
+                            Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
+                            Quote: <input type="text" value={editCharacterQuote} onChange={handleEditCharacterQuote}/><br/>
+                            <input type="submit" value="Update this character" /><br/>
+                          </form>
+                          <button onClick={handleEditFormCancel}>Cancel Edit</button>
+                        </div>
+                      </div>
+                    </div>
+                    :
+                    <div key={char._id} className="col s12 m6 l4 xl3">
+                      <div  className="card character-card hoverable" onClick={()=> {handleShowEditForm(char)}}>
+                        <img src={char.image} className="character-image responsive-img" />
+                        <h3>{char.name}</h3>
+                        <h4>Character quote: {char.quote}</h4>
+                        <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
+                      </div>
+                    </div>
+                  )}
+                )}
+                </>
+                  :
+                null
+              }
+              </div>
+            </section>
+            <section id="episodes-section">
+              <h2>Futurama Episode Information</h2>
+                <div className="container">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Episode</th>
+                        <th>Title</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {episodes.map((ep) => {
+                        return (
+                          <tr key={ep.id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
+                            <td>{ep.episodeNum}</td>
+                            <td>{ep.title}</td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              {
+              showEpisodeInfo === selectedEp.id ?
+                <div className="whole-modal">
+                  <div className="episode-modal" onClick={handleCloseEpisodeInfo}>
+                  </div>
+                  <div className="episode-modal-content">
+                    <h4>{selectedEp.title}</h4>
+                    <h5>Ep No. {selectedEp.episodeNum}</h5>
+                    <h5>Written by {selectedEp.writers}</h5>
+                    <h5>Original Air Date {selectedEp.airdate}</h5>
+                    <p>{selectedEp.description}</p>
+                    <button onClick={handleCloseEpisodeInfo}>Back</button>
+                  </div>
+                </div>
+              :
+              null
+              }
+            </section>
+          </>
+        }
       </main>
     </div>
   )
