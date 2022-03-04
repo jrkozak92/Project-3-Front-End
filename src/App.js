@@ -14,6 +14,7 @@ const App = () => {
   const [editFormId, setEditFormId] = useState('')
   const [episodes, setEpisodes] = useState([])
   const [showEpisodeInfo, setShowEpisodeInfo] = useState(0)
+  const [selectedEp, setSelectedEp] = useState({})
 
   // Index request
   const updateAllCharacters = () => {
@@ -99,6 +100,7 @@ const App = () => {
   }
 
   const handleShowEpInfo = (ep) => {
+    setSelectedEp(ep)
     setShowEpisodeInfo(ep.id)
   }
 
@@ -196,31 +198,32 @@ const App = () => {
                 <tbody>
                   {episodes.map((ep) => {
                     return (
-                      <>
-                        {
-                          showEpisodeInfo === ep.id ?
-                          <div key={ep.id} className="episode-modal">
-                            <div className="episode-modal-content">
-                              <h4>{ep.title}</h4>
-                              <h5>{ep.episodeNum}</h5>
-                              <h5>{ep.writers}</h5>
-                              <h5>{ep.airdate}</h5>
-                              <h5>{ep.description}</h5>
-                              <button onClick={handleCloseEpisodeInfo}>Back</button>
-                            </div>
-                          </div>
-                          :
-                          <tr key={ep.id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
-                            <td>{ep.episodeNum}</td>
-                            <td>{ep.title}</td>
-                          </tr>
-                        }
-                      </>
+                      <tr key={ep.id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
+                        <td>{ep.episodeNum}</td>
+                        <td>{ep.title}</td>
+                      </tr>
                     )
                   })}
                 </tbody>
               </table>
             </div>
+            {
+            showEpisodeInfo === selectedEp.id ?
+              <div className="whole-modal">
+                <div className="episode-modal" onClick={handleCloseEpisodeInfo}>
+                </div>
+                <div className="episode-modal-content">
+                  <h4>{selectedEp.title}</h4>
+                  <h5>Ep No. {selectedEp.episodeNum}</h5>
+                  <h5>Written by {selectedEp.writers}</h5>
+                  <h5>Original Air Date {selectedEp.airdate}</h5>
+                  <p>{selectedEp.description}</p>
+                  <button onClick={handleCloseEpisodeInfo}>Back</button>
+                </div>
+              </div>
+            :
+            null
+            }
         </section>
       </main>
     </div>
