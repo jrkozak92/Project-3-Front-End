@@ -115,6 +115,9 @@ const App = () => {
     } else {
       menuEl.style.right = "0px"
     }
+    if (showNewCharacterForm) {
+      setShowNewCharacterForm(!showNewCharacterForm)
+    }
   }
 
   useEffect(()=> {
@@ -130,27 +133,28 @@ const App = () => {
         {/* Conditionally render hamburger menu or full links menu */}
         
           <div id="menu-content">
+            { showNewCharacterForm ?
+            <section>
+              <form onSubmit={handleNewCharacterFormSubmit}>
+                Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
+                Image URL: <input type="text" placeholder="image path here" onChange={handleNewCharacterImage}/><br/>
+                Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
+                <input type="submit" value="Add this new character" /><br/>
+              </form>
+              <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Cancel</button>
+            </section> :
             <ul>
-              <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm); handleToggleNavMenu()}}>
+              <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>
                 Add New Character 
               </li>
               <li onClick={handleToggleNavMenu}><a href="#episodes-section">List of Episodes</a></li>
-            </ul>
+            </ul> 
+            }
+            
           </div>
         <a href="#" className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></a>
       </header>
       <main>
-        { showNewCharacterForm ?
-        <section>
-          <form onSubmit={handleNewCharacterFormSubmit}>
-            Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
-            Image URL: <input type="text" placeholder="image path here" onChange={handleNewCharacterImage}/><br/>
-            Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
-            <input type="submit" value="Add this new character" /><br/>
-          </form>
-          <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm); handleToggleNavMenu()}}>Cancel</button>
-        </section> :
-        null }
         <section id="characters-section">
           <h2>Hot Diggity Daffodil! Meet the characters of <em>Futurama</em>!</h2>
           <div className='container row'>
