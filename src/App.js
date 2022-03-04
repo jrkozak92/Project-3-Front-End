@@ -134,7 +134,7 @@ const App = () => {
               <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm); handleToggleNavMenu()}}>
                 Add New Character 
               </li>
-              <li><a href="#episodes-section">List of Episodes</a></li>
+              <li onClick={handleToggleNavMenu}><a href="#episodes-section">List of Episodes</a></li>
             </ul>
           </div>
         <a href="#" className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></a>
