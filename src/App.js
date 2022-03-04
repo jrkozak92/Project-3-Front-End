@@ -14,6 +14,7 @@ const App = () => {
   const [editFormId, setEditFormId] = useState('')
   const [episodes, setEpisodes] = useState([])
   const [showEpisodeInfo, setShowEpisodeInfo] = useState(0)
+  const [selectedEp, setSelectedEp] = useState({})
 
   // Index request
   const updateAllCharacters = () => {
@@ -99,6 +100,7 @@ const App = () => {
   }
 
   const handleShowEpInfo = (ep) => {
+    setSelectedEp(ep)
     setShowEpisodeInfo(ep.id)
   }
 
@@ -112,6 +114,9 @@ const App = () => {
       menuEl.style.right = "-80%"
     } else {
       menuEl.style.right = "0px"
+    }
+    if (showNewCharacterForm) {
+      setShowNewCharacterForm(!showNewCharacterForm)
     }
   }
 
@@ -128,27 +133,28 @@ const App = () => {
         {/* Conditionally render hamburger menu or full links menu */}
         
           <div id="menu-content">
+            { showNewCharacterForm ?
+            <section>
+              <form onSubmit={handleNewCharacterFormSubmit}>
+                Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
+                Image URL: <input type="text" placeholder="image path here" onChange={handleNewCharacterImage}/><br/>
+                Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
+                <input type="submit" value="Add this new character" /><br/>
+              </form>
+              <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Cancel</button>
+            </section> :
             <ul>
-              <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm); handleToggleNavMenu()}}>
+              <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>
                 Add New Character 
               </li>
-              <li><a href="#episodes-section">List of Episodes</a></li>
-            </ul>
+              <li onClick={handleToggleNavMenu}><a href="#episodes-section">List of Episodes</a></li>
+            </ul> 
+            }
+            
           </div>
         <a href="#" className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></a>
       </header>
       <main>
-        { showNewCharacterForm ?
-        <section>
-          <form onSubmit={handleNewCharacterFormSubmit}>
-            Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
-            Image URL: <input type="text" placeholder="image path here" onChange={handleNewCharacterImage}/><br/>
-            Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
-            <input type="submit" value="Add this new character" /><br/>
-          </form>
-          <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm); handleToggleNavMenu()}}>Cancel</button>
-        </section> :
-        null }
         <section id="characters-section">
           <h2>Hot Diggity Daffodil! Meet the characters of <em>Futurama</em>!</h2>
           <div className='container row'>
@@ -159,7 +165,7 @@ const App = () => {
                 <div key={char._id} className="col s12 m6 l4 xl3">
                   <div  className="card edit-card">
                     <div className="edit-card-content">
-                      <h2>Edit {char.name}</h2>
+                      <h3>Edit {char.name}</h3>
                       <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
                         Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
                         Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
@@ -175,7 +181,7 @@ const App = () => {
                   <div  className="card character-card hoverable" onClick={()=> {handleShowEditForm(char)}}>
                     <img src={char.image} className="character-image responsive-img" />
                     <h3>{char.name}</h3>
-                    <h4>Character quote: {char.quote}</h4>
+                    <h6>Character quote: {char.quote}</h6>
                     <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
                   </div>
                 </div>
@@ -196,31 +202,32 @@ const App = () => {
                 <tbody>
                   {episodes.map((ep) => {
                     return (
-                      <>
-                        {
-                          showEpisodeInfo === ep.id ?
-                          <div key={ep.id} className="episode-modal">
-                            <div className="episode-modal-content">
-                              <h4>{ep.title}</h4>
-                              <h5>{ep.episodeNum}</h5>
-                              <h5>{ep.writers}</h5>
-                              <h5>{ep.airdate}</h5>
-                              <h5>{ep.description}</h5>
-                              <button onClick={handleCloseEpisodeInfo}>Back</button>
-                            </div>
-                          </div>
-                          :
-                          <tr key={ep.id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
-                            <td>{ep.episodeNum}</td>
-                            <td>{ep.title}</td>
-                          </tr>
-                        }
-                      </>
+                      <tr key={ep.id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
+                        <td>{ep.episodeNum}</td>
+                        <td>{ep.title}</td>
+                      </tr>
                     )
                   })}
                 </tbody>
               </table>
             </div>
+            {
+            showEpisodeInfo === selectedEp.id ?
+              <div className="whole-modal">
+                <div className="episode-modal" onClick={handleCloseEpisodeInfo}>
+                </div>
+                <div className="episode-modal-content">
+                  <h4>{selectedEp.title}</h4>
+                  <h5>Ep No. {selectedEp.episodeNum}</h5>
+                  <h5>Written by {selectedEp.writers}</h5>
+                  <h5>Original Air Date {selectedEp.airdate}</h5>
+                  <p>{selectedEp.description}</p>
+                  <button onClick={handleCloseEpisodeInfo}>Back</button>
+                </div>
+              </div>
+            :
+            null
+            }
         </section>
       </main>
     </div>
