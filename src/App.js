@@ -30,7 +30,7 @@ const App = () => {
   // Index request
   //https://stormy-temple-25752.herokuapp.com
   const updateAllCharacters = () => {
-    axios.get('http://localhost:3000/characters').then((response) => {
+    axios.get('https://stormy-temple-25752.herokuapp.com/characters').then((response) => {
       setCharacters(response.data)
     })
   }
@@ -38,7 +38,7 @@ const App = () => {
 //https://stormy-temple-25752.herokuapp.com
   const handleNewCharacterFormSubmit = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:3000/characters',
+    axios.post('https://stormy-temple-25752.herokuapp.com/characters',
     {
       name: newCharacterName,
       image: newCharacterImage,
@@ -52,7 +52,7 @@ const App = () => {
 
 //https://stormy-temple-25752.herokuapp.com
   const handleDeleteCharacter = (char) => {
-    axios.delete(`http://localhost:3000/characters/${char._id}`)
+    axios.delete(`https://stormy-temple-25752.herokuapp.com/characters/${char._id}`)
     .then(() => {
       updateAllCharacters()
     })
@@ -92,7 +92,7 @@ const App = () => {
 //https://stormy-temple-25752.herokuapp.com
   const handleEditFormSubmit = (char, e) => {
     e.preventDefault()
-    axios.put(`http://localhost:3000/characters/${char._id}`, {
+    axios.put(`https://stormy-temple-25752.herokuapp.com/characters/${char._id}`, {
       name: editCharacterName,
       image: editCharacterImage,
       quote: editCharacterQuote
@@ -104,7 +104,7 @@ const App = () => {
   }
 //https://stormy-temple-25752.herokuapp.com
   const getEpisodes = () => {
-    axios.get('http://localhost:3000/episodes').then((response) => {
+    axios.get('https://stormy-temple-25752.herokuapp.com/episodes').then((response) => {
       const rawData = response.data
       rawData.sort((a,b) => {
         if (a.id > b.id) return 1
@@ -146,7 +146,7 @@ const App = () => {
     }
     setUsername('')
     setPassword('')
-    axios.post('http://localhost:3000/users', userObj)
+    axios.post('https://stormy-temple-25752.herokuapp.com/users', userObj)
       .then((response) => {
         if (response.data.username) {
           console.log(response.data);
@@ -170,7 +170,7 @@ const App = () => {
     }
     setUsername('')
     setPassword('')
-    axios.post('http://localhost:3000/sessions', userObj)
+    axios.post('https://stormy-temple-25752.herokuapp.com/sessions', userObj)
       .then((response) => {
         if (response.data.username) {
           console.log(response.data)
