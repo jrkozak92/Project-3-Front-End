@@ -26,8 +26,10 @@ header {
 
 .logo {
   padding:1em;
-  max-width:70%;
+  max-width:100%;
   min-width:0;
+  max-height:13vh;
+
 }
 
 .App-logo {
@@ -73,6 +75,24 @@ header {
   box-shadow:3px 3px 3px #b73b3b;
 }
 
+.edit-card-content {
+  padding: 1.5em;
+}
+
+.character-image {
+  max-height: 300px;
+}
+
+.whole-modal {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+}
+
 .episode-modal {
   height: 100%;
   width: 100%;
@@ -86,12 +106,24 @@ header {
 }
 
 .episode-modal-content {
-  width: 70%;
+  min-width: 50%;
+  max-width: 85%;
+  max-height: 100%;
   padding: 1em;
   background-color: #c32040;
   border: 3px solid #e7d767;
   border-radius: 10px;
+  z-index: 100;
   box-shadow:3px 3px 3px #b73b3b;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  overflow: auto;
+}
+
+.episode-modal-content p {
+  width: 80%;
 }
 
 a {

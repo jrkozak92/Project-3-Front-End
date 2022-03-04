@@ -14,6 +14,7 @@ const App = () => {
   const [editFormId, setEditFormId] = useState('')
   const [episodes, setEpisodes] = useState([])
   const [showEpisodeInfo, setShowEpisodeInfo] = useState(0)
+
   const [toggleLogin, setToggleLogin] = useState(true)
   const [toggleError, setToggleError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -22,6 +23,9 @@ const App = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
+  const [selectedEp, setSelectedEp] = useState({})
+
 
   // Index request
   //https://stormy-temple-25752.herokuapp.com
@@ -112,6 +116,7 @@ const App = () => {
   }
 
   const handleShowEpInfo = (ep) => {
+    setSelectedEp(ep)
     setShowEpisodeInfo(ep.id)
   }
 
@@ -125,6 +130,9 @@ const App = () => {
       menuEl.style.right = "-80%"
     } else {
       menuEl.style.right = "0px"
+    }
+    if (showNewCharacterForm) {
+      setShowNewCharacterForm(!showNewCharacterForm)
     }
   }
 
@@ -217,11 +225,21 @@ const App = () => {
         {/* Conditionally render hamburger menu or full links menu */}
 
           <div id="menu-content">
+            { showNewCharacterForm ?
+            <section>
+              <form onSubmit={handleNewCharacterFormSubmit}>
+                Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
+                Image URL: <input type="text" placeholder="image path here" onChange={handleNewCharacterImage}/><br/>
+                Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
+                <input type="submit" value="Add this new character" /><br/>
+              </form>
+              <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Cancel</button>
+            </section> :
             <ul>
               <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm); handleToggleNavMenu()}}>
                 Add New Character
               </li>
-              <li><a href="#episodes-section">List of Episodes</a></li>
+              <li onClick={handleToggleNavMenu}><a href="#episodes-section">List of Episodes</a></li>
               <li>
               {toggleLogout ?
                 <button onClick={handleLogout}>Logout</button> :
@@ -254,6 +272,7 @@ const App = () => {
               }
               </li>
             </ul>
+            }
           </div>
         <a href="#" className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></a>
       </header>
@@ -264,17 +283,6 @@ const App = () => {
           </>
             :
           <>
-            { showNewCharacterForm ?
-            <section>
-              <form onSubmit={handleNewCharacterFormSubmit}>
-                Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
-                Image URL: <input type="text" placeholder="image path here" onChange={handleNewCharacterImage}/><br/>
-                Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
-                <input type="submit" value="Add this new character" /><br/>
-              </form>
-              <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm); handleToggleNavMenu()}}>Cancel</button>
-            </section> :
-            null }
             <section id="characters-section">
               <h2>Hot Diggity Daffodil! Meet the characters of <em>Futurama</em>!</h2>
               <div className='container row'>
@@ -327,31 +335,32 @@ const App = () => {
                     <tbody>
                       {episodes.map((ep) => {
                         return (
-                          <>
-                            {
-                              showEpisodeInfo === ep.id ?
-                              <div key={ep.id} className="episode-modal">
-                                <div className="episode-modal-content">
-                                  <h4>{ep.title}</h4>
-                                  <h5>{ep.episodeNum}</h5>
-                                  <h5>{ep.writers}</h5>
-                                  <h5>{ep.airdate}</h5>
-                                  <h5>{ep.description}</h5>
-                                  <button onClick={handleCloseEpisodeInfo}>Back</button>
-                                </div>
-                              </div>
-                              :
-                              <tr key={ep.id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
-                                <td>{ep.episodeNum}</td>
-                                <td>{ep.title}</td>
-                              </tr>
-                            }
-                          </>
+                          <tr key={ep.id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
+                            <td>{ep.episodeNum}</td>
+                            <td>{ep.title}</td>
+                          </tr>
                         )
                       })}
                     </tbody>
                   </table>
                 </div>
+              {
+              showEpisodeInfo === selectedEp.id ?
+                <div className="whole-modal">
+                  <div className="episode-modal" onClick={handleCloseEpisodeInfo}>
+                  </div>
+                  <div className="episode-modal-content">
+                    <h4>{selectedEp.title}</h4>
+                    <h5>Ep No. {selectedEp.episodeNum}</h5>
+                    <h5>Written by {selectedEp.writers}</h5>
+                    <h5>Original Air Date {selectedEp.airdate}</h5>
+                    <p>{selectedEp.description}</p>
+                    <button onClick={handleCloseEpisodeInfo}>Back</button>
+                  </div>
+                </div>
+              :
+              null
+              }
             </section>
           </>
         }
