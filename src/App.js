@@ -14,17 +14,27 @@ const App = () => {
   const [editFormId, setEditFormId] = useState('')
   const [episodes, setEpisodes] = useState([])
   const [showEpisodeInfo, setShowEpisodeInfo] = useState(0)
+  const [toggleLogin, setToggleLogin] = useState(true)
+  const [toggleError, setToggleError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [toggleLogout, setToggleLogout] = useState(false)
+  const [currentUser, setCurrentUser] = useState({})
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   // Index request
+  //https://stormy-temple-25752.herokuapp.com
   const updateAllCharacters = () => {
-    axios.get('https://stormy-temple-25752.herokuapp.com/characters').then((response) => {
+    axios.get('http://localhost:3000/characters').then((response) => {
       setCharacters(response.data)
     })
   }
 
+//https://stormy-temple-25752.herokuapp.com
   const handleNewCharacterFormSubmit = (e) => {
     e.preventDefault()
-    axios.post('https://stormy-temple-25752.herokuapp.com/characters',
+    axios.post('http://localhost:3000/characters',
     {
       name: newCharacterName,
       image: newCharacterImage,
@@ -36,8 +46,9 @@ const App = () => {
     })
   }
 
+//https://stormy-temple-25752.herokuapp.com
   const handleDeleteCharacter = (char) => {
-    axios.delete(`https://stormy-temple-25752.herokuapp.com/characters/${char._id}`)
+    axios.delete(`http://localhost:3000/characters/${char._id}`)
     .then(() => {
       updateAllCharacters()
     })
@@ -73,9 +84,11 @@ const App = () => {
     setEditFormId('')
   }
 
+
+//https://stormy-temple-25752.herokuapp.com
   const handleEditFormSubmit = (char, e) => {
     e.preventDefault()
-    axios.put(`https://stormy-temple-25752.herokuapp.com/characters/${char._id}`, {
+    axios.put(`http://localhost:3000/characters/${char._id}`, {
       name: editCharacterName,
       image: editCharacterImage,
       quote: editCharacterQuote
@@ -85,9 +98,9 @@ const App = () => {
       setEditFormId('')
     })
   }
-
+//https://stormy-temple-25752.herokuapp.com
   const getEpisodes = () => {
-    axios.get('https://stormy-temple-25752.herokuapp.com/episodes').then((response) => {
+    axios.get('http://localhost:3000/episodes').then((response) => {
       const rawData = response.data
       rawData.sort((a,b) => {
         if (a.id > b.id) return 1
@@ -115,6 +128,41 @@ const App = () => {
     }
   }
 
+//https://stormy-temple-25752.herokuapp.com
+  const handleCreateUser = (event) => {
+    event.preventDefault()
+    event.currentTarget.reset()
+    let userObj = {
+      username: username,
+      password: password
+    }
+    setUsername('')
+    setPassword('')
+    axios.post('http://localhost:3000/users')
+      .then((response) => {
+        if (response.data.username) {
+          console.log(response.data);
+          setToggleError(false)
+          setErrorMessage('')
+          setCurrentUser(response.data)
+          handleToggleLogout()
+        } else {
+          setErrorMessage(response.data)
+          setToggleError(true)
+        }
+      })
+  }
+
+
+
+  const handleToggleLoginForm = () => {
+    setToggleError(false)
+    if (toggleLogin === true) {
+      setToggleLogin(false)
+    } else {
+      setToggleLogin(true)
+    }
+  }
   useEffect(()=> {
     updateAllCharacters()
     getEpisodes()
@@ -126,13 +174,44 @@ const App = () => {
         <img src="./futurama_logo.png" className="logo"/>
 
         {/* Conditionally render hamburger menu or full links menu */}
-        
+
           <div id="menu-content">
             <ul>
               <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm); handleToggleNavMenu()}}>
-                Add New Character 
+                Add New Character
               </li>
               <li><a href="#episodes-section">List of Episodes</a></li>
+              <li>
+              {toggleLogout ?
+                <button onClick={handleLogout}>Logout</button> :
+                <>
+                  { togggleLogin ?
+                    <form onSubmit={handleLogin}>
+                      <input type="text" placeholder="Username" onChange={(event) => {setUsername(event.target.value)}}/>
+                      <input type="password" placeholder="Password" onChange={(event) => { setPassword(event.target.value) }}/>
+                      {toggleError ?
+                        <h5>{errorMessage}</h5>
+                          :
+                        null
+                      }
+                      <input type="submit" value="Login"/>
+                    </form>
+                    :
+                    <form onSubmit={handleCreateUser}>
+                      <input type="text" placeholder="Username" onChange={(event) => {setUsername(event.target.value)}}/>
+                      <input type="password" placeholder="Password" onChange={(event) => {setPassword(event.target.value)}}/>
+                      {toggleError ?
+                        <h5>{errorMessage}</h5>
+                          :
+                        null
+                      }
+                      <input type="submit" value="Create Account"/>
+                    </form>
+                  }
+                <button onClick={handleToggleLoginForm}>{toggleLogin ? 'Need an Account?' : 'Already have an account?'}</button>
+                </>
+              }
+              </li>
             </ul>
           </div>
         <a href="#" className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></a>
