@@ -236,7 +236,7 @@ const App = () => {
               <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Cancel</button>
             </section> :
             <ul>
-              <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm); handleToggleNavMenu()}}>
+              <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>
                 Add New Character
               </li>
               <li onClick={handleToggleNavMenu}><a href="#episodes-section">List of Episodes</a></li>
