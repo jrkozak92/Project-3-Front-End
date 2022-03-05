@@ -32,6 +32,17 @@ header {
 
 }
 
+.nav-link {
+  transition: all .2s ease-in-out;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.nav-link:hover {
+  transform: scale(1.2);
+  text-shadow: 2px 2px 10px purple;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

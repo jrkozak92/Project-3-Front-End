@@ -236,10 +236,10 @@ const App = () => {
               <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Cancel</button>
             </section> :
             <ul>
-              <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>
-                Add New Character
+              <li>
+                <span className="nav-link" onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Add New Character</span>
               </li>
-              <li onClick={handleToggleNavMenu}><a href="#episodes-section">List of Episodes</a></li>
+              <li ><a className="nav-link" onClick={handleToggleNavMenu} href="#episodes-section">List of Episodes</a></li>
               <li>
               {toggleLogout ?
                 <button onClick={handleLogout}>Logout</button> :
