@@ -1,6 +1,7 @@
 import './App.css';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import Map from './components/Map'
 
 const App = () => {
   const [characters, setCharacters] = useState([])
@@ -214,6 +215,12 @@ const App = () => {
     }
   }
 
+  const location = {
+    address: '1600 Amphitheatre Parkway, Mountain View, california.',
+    lat: 37.42216,
+    lng: -122.08427,
+  }
+
   useEffect(()=> {
     updateAllCharacters()
     getEpisodes()
@@ -285,6 +292,7 @@ const App = () => {
           <span className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></span> }
       </header>
       {/* <div id="map"></div> */}
+      <Map location={location} zoomLevel={4}/>
       <main>
         {!currentUser.username ?
           <>

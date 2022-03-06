@@ -21,10 +21,11 @@ header {
   background-color:#379362;
   border-bottom:5px solid #b73b3b;
   color:white;
-  max-height: 15vh;
+  height: 15vh;
   position: sticky;
   top: 0;
   z-index: 1;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -201,7 +202,9 @@ a {
   /* The height is 400 pixels */
   width: 100%;
   /* The width is the width of the web page */
-  position: fixed;
-  right: 0;
-  top: 0;
+}
+
+.google-map {
+  height: 100%;
+  width: 100%;
 }
