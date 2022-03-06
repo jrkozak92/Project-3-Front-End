@@ -22,6 +22,9 @@ header {
   border-bottom:5px solid #b73b3b;
   color:white;
   max-height: 15vh;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .logo {
@@ -78,12 +81,34 @@ header {
   }
 }
 
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: space-between;
+  row-gap: 1em;
+}
 
+/* .col {
+  display: flex;
+  gap: 1em;
+} */
 
 .card {
   background-color:rgba(255,255,255,.2);
   border:3px solid #e7d767;
   box-shadow:3px 3px 3px #b73b3b;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+}
+
+.card h3 {
+  font-size: 2em;
+}
+
+.card h5 {
+  font-size: 1.25em;
 }
 
 .edit-card-content {
@@ -92,6 +117,15 @@ header {
 
 .character-image {
   max-height: 300px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.episodes-section-header {
+  position: sticky;
+  top: 13vh;
+  background-color: #68e295;
+  margin: 0;
 }
 
 .whole-modal {
@@ -160,4 +194,14 @@ a {
 
 #menu-content li {
   margin: 0.5em auto;
+}
+
+#map {
+  height: 400px;
+  /* The height is 400 pixels */
+  width: 100%;
+  /* The width is the width of the web page */
+  position: fixed;
+  right: 0;
+  top: 0;
 }
