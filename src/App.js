@@ -5,6 +5,7 @@ import axios from 'axios'
 const App = () => {
   const [characters, setCharacters] = useState([])
   const [showNewCharacterForm, setShowNewCharacterForm] = useState(false)
+  const [showNavMenu, setShowNavMenu] = useState(false)
   const [newCharacterName, setNewCharacterName] = useState('')
   const [newCharacterImage, setNewCharacterImage] = useState('')
   const [newCharacterQuote, setNewCharacterQuote] = useState('')
@@ -125,6 +126,7 @@ const App = () => {
   }
 
   const handleToggleNavMenu = () => {
+    setShowNavMenu(!showNavMenu)
     const menuEl = document.getElementById('menu-content')
     if(menuEl.style.right === "0px") {
       menuEl.style.right = "-80%"
@@ -218,64 +220,71 @@ const App = () => {
   }, [])
 
   return (
+    <>
     <div>
       <header>
         <img src="./futurama_logo.png" className="logo"/>
-
         {/* Conditionally render hamburger menu or full links menu */}
-
-          <div id="menu-content">
-            { showNewCharacterForm ?
-            <section>
-              <form onSubmit={handleNewCharacterFormSubmit}>
-                Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
-                Image URL: <input type="text" placeholder="image path here" onChange={handleNewCharacterImage}/><br/>
-                Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
-                <input type="submit" value="Add this new character" /><br/>
-              </form>
-              <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Cancel</button>
-            </section> :
-            <ul>
-              <li onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>
-                Add New Character
-              </li>
-              <li onClick={handleToggleNavMenu}><a href="#episodes-section">List of Episodes</a></li>
+        <div id="menu-content">
+          { showNewCharacterForm ?
+          <section>
+            <form onSubmit={handleNewCharacterFormSubmit}>
+              Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
+              Image URL: <input type="text" placeholder="image path here" onChange={handleNewCharacterImage}/><br/>
+              Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
+              <input type="submit" value="Add this new character" /><br/>
+            </form>
+            <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Cancel</button>
+          </section> :
+          <ul>
+            {toggleLogout ?
+            <>
               <li>
-              {toggleLogout ?
-                <button onClick={handleLogout}>Logout</button> :
-                <>
-                  { toggleLogin ?
-                    <form onSubmit={handleLogin}>
-                      <input type="text" placeholder="Username" onChange={(event) => {setUsername(event.target.value)}}/>
-                      <input type="password" placeholder="Password" onChange={(event) => { setPassword(event.target.value) }}/>
-                      {toggleError ?
-                        <h5>{errorMessage}</h5>
-                          :
-                        null
-                      }
-                      <input type="submit" value="Login"/>
-                    </form>
-                    :
-                    <form onSubmit={handleCreateUser}>
-                      <input type="text" placeholder="Username" onChange={(event) => {setUsername(event.target.value)}}/>
-                      <input type="password" placeholder="Password" onChange={(event) => {setPassword(event.target.value)}}/>
-                      {toggleError ?
-                        <h5>{errorMessage}</h5>
-                          :
-                        null
-                      }
-                      <input type="submit" value="Create Account"/>
-                    </form>
-                  }
-                <button onClick={handleToggleLoginForm}>{toggleLogin ? 'Need an Account?' : 'Already have an account?'}</button>
-                </>
-              }
+                <span className="nav-link" onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Add New Character</span>
               </li>
-            </ul>
+              <li >
+                <a className="nav-link" onClick={handleToggleNavMenu} href="#episodes-section">List of Episodes</a>
+              </li>
+              <button onClick={handleLogout}>Logout</button>
+            </> :
+            <>
+              <li>
+                { toggleLogin ?
+                  <form onSubmit={handleLogin}>
+                    <input type="text" placeholder="Username" onChange={(event) => {setUsername(event.target.value)}}/>
+                    <input type="password" placeholder="Password" onChange={(event) => { setPassword(event.target.value) }}/>
+                    {toggleError ?
+                      <h5>{errorMessage}</h5>
+                        :
+                      null
+                    }
+                    <input type="submit" value="Login"/>
+                  </form>
+                  :
+                  <form onSubmit={handleCreateUser}>
+                    <input type="text" placeholder="Username" onChange={(event) => {setUsername(event.target.value)}}/>
+                    <input type="password" placeholder="Password" onChange={(event) => {setPassword(event.target.value)}}/>
+                    {toggleError ?
+                      <h5>{errorMessage}</h5>
+                        :
+                      null
+                    }
+                    <input type="submit" value="Create Account"/>
+                  </form>
+                }
+                <button onClick={handleToggleLoginForm}>{toggleLogin ? 'Need an Account?' : 'Already have an account?'}</button>
+              </li>
+            </>
             }
-          </div>
-        <a href="#" className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></a>
+          </ul>
+          }
+        </div>
+          { showNavMenu ? 
+          <span className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">close</i></span> 
+          :
+          <span className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></span> }
       </header>
+      {/* <div id="map"></div> */}
       <main>
         {!currentUser.username ?
           <>
@@ -294,7 +303,7 @@ const App = () => {
                     <div key={char._id} className="col s12 m6 l4 xl3">
                       <div  className="card edit-card">
                         <div className="edit-card-content">
-                          <h2>Edit {char.name}</h2>
+                          <h3>Edit {char.name}</h3>
                           <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
                             Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
                             Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
@@ -310,7 +319,7 @@ const App = () => {
                       <div  className="card character-card hoverable" onClick={()=> {handleShowEditForm(char)}}>
                         <img src={char.image} className="character-image responsive-img" />
                         <h3>{char.name}</h3>
-                        <h4>Character quote: {char.quote}</h4>
+                        <h5>"{char.quote}"</h5>
                         <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
                       </div>
                     </div>
@@ -323,7 +332,7 @@ const App = () => {
               </div>
             </section>
             <section id="episodes-section">
-              <h2>Futurama Episode Information</h2>
+              <h2 className="episodes-section-header">Futurama Episode Information</h2>
                 <div className="container">
                   <table>
                     <thead>
@@ -366,6 +375,8 @@ const App = () => {
         }
       </main>
     </div>
+    
+    </>
   )
 }
 
