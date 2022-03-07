@@ -2,6 +2,7 @@ import './App.css';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import Map from './components/Map'
+import Marker from './components/Markers'
 
 const App = () => {
   const [characters, setCharacters] = useState([])
@@ -292,7 +293,9 @@ const App = () => {
           <span className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></span> }
       </header>
       {/* <div id="map"></div> */}
-      <Map location={location} zoomLevel={4}/>
+      <Map location={location} zoomLevel={4}>
+        <Marker position={location} />
+      </Map>
       <main>
         {!currentUser.username ?
           <>
