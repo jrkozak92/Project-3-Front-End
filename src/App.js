@@ -23,10 +23,10 @@ loader.load().then(function (google) {
         lng: position.coords.longitude
       }
       //axios post call to add new geolocation
-      axios.post('http://localhost:3000/markers', {
+      axios.post('https://stormy-temple-25752.herokuapp.com/markers', {
         coords: userLocation
       }).then(()=> {
-        axios.get('http://localhost:3000/markers')
+        axios.get('https://stormy-temple-25752.herokuapp.com/markers')
              .then((response) => {
                console.log(response.data)
                const markersArray = response.data
@@ -40,7 +40,7 @@ loader.load().then(function (google) {
       })
     }, (err) => {
       //axios get call to get array of marker objects
-      axios.get('http://localhost:3000/markers')
+      axios.get('https://stormy-temple-25752.herokuapp.com/markers')
            .then((response) => {
               console.log(response.data)
               const markersArray = response.data
