@@ -206,10 +206,12 @@ const App = () => {
   const handleToggleNavMenu = () => {
     setShowNavMenu(!showNavMenu)
     const menuEl = document.getElementById('menu-content')
-    if(menuEl.style.right === "0px") {
+    if(menuEl.style.right === "0px") { //if already open
       menuEl.style.right = "-80%"
+      menuEl.style.boxShadow = "none"
     } else {
       menuEl.style.right = "0px"
+      menuEl.style.boxShadow = "-1px 1px 20px purple"
     }
     if (showNewCharacterForm) {
       setShowNewCharacterForm(!showNewCharacterForm)

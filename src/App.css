@@ -195,7 +195,6 @@ a {
   font-weight: bold;
   text-shadow: 1px 1px 5px purple;
   transition: all .4s ease-in;
-  box-shadow: -1px 1px 20px purple;
 }
 
 #menu-content li {
