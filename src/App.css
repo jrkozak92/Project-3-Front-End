@@ -1,3 +1,13 @@
+/* font-family: 'Futurama Alien Alphabet One', sans-serif;
+font-family: 'Futurama Alien Alphabet Two', sans-serif;
+font-family: 'Futurama Title Font', sans-serif;
+font-family: 'Futurama Bold Font', sans-serif; */
+
+@font-face {
+  font-family: 'Futurama Alien Alphabet One', sans-serif;
+  src: url(../public/Futurama_Alien_Alphabet_One/fr-fal1.ttf), ('.ttf');
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -10,6 +20,7 @@ html {
 body {
   text-align: center;
   background-color:#68e295;
+  font-family: 'Futurama Bold Font', sans-serif;
 }
 
 header {
@@ -33,7 +44,6 @@ header {
   max-width:100%;
   min-width:0;
   max-height:13vh;
-
 }
 
 .nav-link {
@@ -120,6 +130,10 @@ header {
 
 .card:hover {
   cursor: pointer;
+}
+
+.aliense-on-hover:hover {
+  font-family: 'Futurama Alien Alphabet One', sans-serif;
 }
 
 .edit-card-content {
