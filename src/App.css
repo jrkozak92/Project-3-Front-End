@@ -24,7 +24,7 @@ header {
   height: 15vh;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 0;
   box-sizing: border-box;
 }
 
@@ -102,6 +102,7 @@ header {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
+  z-index: -1;
 }
 
 .card h3 {
@@ -127,6 +128,7 @@ header {
   top: 15vh;
   background-color: #68e295;
   margin: 0;
+  z-index: -1;
 }
 
 .whole-modal {
@@ -166,6 +168,7 @@ header {
   justify-content: space-evenly;
   align-items: center;
   overflow: auto;
+  position: relative;
 }
 
 .episode-modal-content p {
@@ -185,7 +188,7 @@ a {
   position: fixed;
   right: -80%;
   top: 15vh;
-  z-index: 1;
+  z-index: 2;
   background-color: #f68021;
   padding: 1em;
   font-size: 1.5em;
@@ -204,9 +207,14 @@ a {
   /* The height is 400 pixels */
   width: 100%;
   /* The width is the width of the web page */
+  z-index: -1;
 }
 
 .google-map {
   height: 100%;
   width: 100%;
+}
+
+table {
+  z-index: -2;
 }
