@@ -2,7 +2,85 @@ import './App.css';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 
+//The following package/link was shared by our instructor to help us get Google Maps markers working in this app: https://www.npmjs.com/package/google-maps
+//We had tried several other packages and ran into issues with all of them.
+import {Loader, LoaderOptions} from 'google-maps';
+const options = {/* todo */};
+const loader = new Loader('AIzaSyDPi8JMfy1GZjzQpFq1sPqzVMm6ASBLBTs', options);
+let map = null
+let mapsAPI = null
+loader.load().then(function (google) {
+  mapsAPI = google
+  map = new mapsAPI.maps.Map(document.getElementById('map'), {
+      center: {lat: 40, lng: -70},
+      zoom: 4,
+  });
+
+    // Helpful link for error handling/implementation of getCurrentPosition: https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
+    navigator.geolocation.getCurrentPosition((position) => {
+      const userLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      }
+      //axios post call to add new geolocation
+      axios.post('https://stormy-temple-25752.herokuapp.com/markers', {
+        coords: userLocation
+      }).then(()=> {
+        axios.get('https://stormy-temple-25752.herokuapp.com/markers')
+             .then((response) => {
+               console.log(response.data)
+               const markersArray = response.data
+               markersArray.map((marker) => {
+                const markerPin = new mapsAPI.maps.Marker({
+                  position: marker.coords,
+                  map: map,
+                });
+               })
+             })
+      })
+    }, (err) => {
+      //axios get call to get array of marker objects
+      axios.get('https://stormy-temple-25752.herokuapp.com/markers')
+           .then((response) => {
+              console.log(response.data)
+              const markersArray = response.data
+              markersArray.map((marker) => {
+              const markerPin = new mapsAPI.maps.Marker({
+                position: marker.coords,
+                map: map,
+              });
+            })
+          })
+    })
+  
+  
+});
+
 const App = () => {
+  // var userLocation = {}; // will become latitude and longitude of user browser
+  // var map = null;
+  // function initMap() {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     userLocation = { 
+  //       lat: position.coords.latitude, 
+  //       lng: position.coords.longitude 
+  //     };
+  //     // The map, centered at user location
+  //     map = new google.maps.Map(document.getElementById("map"), {
+  //       zoom: 3,
+  //       center: userLocation,
+  //     });
+  //     // The marker, positioned at Uluru
+  //     const marker = new google.maps.Marker({
+  //       position: userLocation,
+  //       map: map,
+  //     });
+  //   })
+  // }
+  // setTimeout(()=> {
+  //   console.log(userLocation, map)
+  // }, 3000);
+
   const [characters, setCharacters] = useState([])
   const [showNewCharacterForm, setShowNewCharacterForm] = useState(false)
   const [showNavMenu, setShowNavMenu] = useState(false)
@@ -214,6 +292,12 @@ const App = () => {
     }
   }
 
+  const location = {
+    address: '1600 Amphitheatre Parkway, Mountain View, california.',
+    lat: 37.42216,
+    lng: -122.08427,
+  }
+
   useEffect(()=> {
     updateAllCharacters()
     getEpisodes()
@@ -284,7 +368,7 @@ const App = () => {
           :
           <span className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></span> }
       </header>
-      {/* <div id="map"></div> */}
+      <div id="map"></div>
       <main>
         {!currentUser.username ?
           <>
