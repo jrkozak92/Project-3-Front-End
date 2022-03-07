@@ -12,7 +12,7 @@ let mapsAPI = null
 loader.load().then(function (google) {
   mapsAPI = google
   map = new mapsAPI.maps.Map(document.getElementById('map'), {
-      center: {lat: 40, lng: -70},
+      center: {lat: 40, lng: -95},
       zoom: 4,
   });
 
@@ -335,6 +335,9 @@ const App = () => {
                 <span className="nav-link" onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Add New Character</span>
               </li>
               <li>
+                <a className="nav-link" onClick={handleToggleNavMenu} href="#characters-section">List of Characters</a>
+              </li>
+              <li>
                 <a className="nav-link" onClick={handleToggleNavMenu} href="#end-of-characters-separator">List of Episodes</a>
               </li>
               <button className="btn" onClick={handleLogout}>Logout</button>
@@ -392,7 +395,7 @@ const App = () => {
                 {characters.map((char) => {
                   return(
                     editFormId === char._id ?
-                    <div key={char._id} className="col s12 m6 l4 xl3">
+                    <div key={char._id} className="col s12 m6 l6 xl4">
                       <div  className="card edit-card">
                         <div className="edit-card-content">
                           <h3>Edit {char.name}</h3>
@@ -402,17 +405,17 @@ const App = () => {
                             Quote: <input type="text" value={editCharacterQuote} onChange={handleEditCharacterQuote}/><br/>
                             <button className="btn" type="submit">Update this character</button><br/>
                           </form>
-                          <button className="btn" onClick={handleEditFormCancel}>Cancel Edit</button>
+                          <button className="btn cancel" onClick={handleEditFormCancel}>Cancel Edit</button>
                         </div>
                       </div>
                     </div>
                     :
-                    <div key={char._id} className="col s12 m6 l4 xl3">
+                    <div key={char._id} className="col s12 m6 l6 xl4">
                       <div  className="card character-card hoverable" onClick={()=> {handleShowEditForm(char)}}>
                         <img src={char.image} className="character-image responsive-img" />
                         <h3>{char.name}</h3>
                         <h5>"{char.quote}"</h5>
-                        <button className="btn" onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
+                        <button className="btn delete" onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
                       </div>
                     </div>
                   )}
@@ -457,7 +460,7 @@ const App = () => {
                     <h5>Written by {selectedEp.writers}</h5>
                     <h5>Original Air Date {selectedEp.airdate}</h5>
                     <p>{selectedEp.description}</p>
-                    <button onClick={handleCloseEpisodeInfo}>Back</button>
+                    <button className="btn" onClick={handleCloseEpisodeInfo}>Back</button>
                   </div>
                 </div>
               :

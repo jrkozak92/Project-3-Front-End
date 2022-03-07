@@ -100,12 +100,14 @@ header {
   border:3px solid #e7d767;
   box-shadow:3px 3px 3px #b73b3b;
   height: 100%;
-  padding: 0.5em;
+  padding: 2em 1em;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   /* z-index: -1; */
   border-radius: 5px;
+  border-top-left-radius: 70px;
+  border-bottom-right-radius: 70px;
 }
 
 .card h3 {
@@ -177,8 +179,11 @@ header {
   background-color: #c32040;
   border: 3px solid #e7d767;
   border-radius: 10px;
+  border-top-left-radius: 15%;
+  border-bottom-right-radius: 15%;
   z-index: 100;
-  box-shadow:3px 3px 3px #b73b3b;
+  box-shadow:-10px 10px 30px black, 
+    10px -10px 30px black;
   text-align: center;
   overflow: auto;
   position: relative;
@@ -221,12 +226,16 @@ a {
   /* The height is 400 pixels */
   width: 100%;
   /* The width is the width of the web page */
-  z-index: -1;
+  z-index: 0;
 }
 
 .google-map {
   height: 100%;
   width: 100%;
+}
+
+#characters-section h2 {
+  padding-top: 15vh;
 }
 
 .btn {
@@ -237,8 +246,22 @@ a {
   padding: 0.25em;
 }
 
+.delete {
+  background: #c7234a;
+}
+
+.cancel {
+  background: #f68021;
+}
+
 @media (min-width: 800px) {
   #menu-content {
     width: 40%;
+  }
+}
+
+@media (min-width: 900px) {
+  .episode-modal-content {
+    border-top-left-radius: 50%;
   }
 }
