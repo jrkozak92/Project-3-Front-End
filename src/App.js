@@ -334,7 +334,7 @@ const App = () => {
               <li>
                 <span className="nav-link" onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Add New Character</span>
               </li>
-              <li >
+              <li>
                 <a className="nav-link" onClick={handleToggleNavMenu} href="#end-of-characters-separator">List of Episodes</a>
               </li>
               <button className="btn" onClick={handleLogout}>Logout</button>
@@ -400,9 +400,9 @@ const App = () => {
                             Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
                             Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
                             Quote: <input type="text" value={editCharacterQuote} onChange={handleEditCharacterQuote}/><br/>
-                            <input type="submit" value="Update this character" /><br/>
+                            <button className="btn" type="submit">Update this character</button><br/>
                           </form>
-                          <button onClick={handleEditFormCancel}>Cancel Edit</button>
+                          <button className="btn" onClick={handleEditFormCancel}>Cancel Edit</button>
                         </div>
                       </div>
                     </div>
@@ -412,7 +412,7 @@ const App = () => {
                         <img src={char.image} className="character-image responsive-img" />
                         <h3>{char.name}</h3>
                         <h5>"{char.quote}"</h5>
-                        <button onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
+                        <button className="btn" onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
                       </div>
                     </div>
                   )}
