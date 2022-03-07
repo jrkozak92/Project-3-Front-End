@@ -25,6 +25,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 1;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -203,7 +204,9 @@ a {
   /* The height is 400 pixels */
   width: 100%;
   /* The width is the width of the web page */
-  position: fixed;
-  right: 0;
-  top: 0;
+}
+
+.google-map {
+  height: 100%;
+  width: 100%;
 }
