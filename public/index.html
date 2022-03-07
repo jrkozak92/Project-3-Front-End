@@ -41,28 +41,11 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-      function initMap() {
-        let userLocation = {}; // will become latitude and longitude of user browser
-        navigator.geolocation.getCurrentPosition((position) => {
-          userLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
-        })
-        // The map, centered at user location
-        const map = new google.maps.Map(document.getElementById("map"), {
-          zoom: 3,
-          center: userLocation,
-        });
-        // The marker, positioned at Uluru
-        const marker = new google.maps.Marker({
-          position: userLocation,
-          map: map,
-        });
-      }
-    </script>
-    <script
+    <!-- <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPi8JMfy1GZjzQpFq1sPqzVMm6ASBLBTs&callback=initMap&libraries=&v=weekly"
       async
-    ></script>
+    ></script> -->
   </body>
 </html>
