@@ -4,8 +4,13 @@ font-family: 'Futurama Title Font', sans-serif;
 font-family: 'Futurama Bold Font', sans-serif; */
 
 @font-face {
-  font-family: 'Futurama Alien Alphabet One', sans-serif;
-  src: url(../public/Futurama_Alien_Alphabet_One/fr-fal1.ttf), ('.ttf');
+  font-family: "Futurama Alien Alphabet One";
+  src: url("../public/Futurama_Alien_Alphabet_One/fr-fal1.eot?") format("eot"), 
+       url("../public/Futurama_Alien_Alphabet_One/fr-fal1.woff") format("woff"),
+       url("../public/Futurama_Alien_Alphabet_One/fr-fal1.ttf") format("truetype"),
+       url("../public/Futurama_Alien_Alphabet_One/fr-fal1.svg#") format("svg");
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
