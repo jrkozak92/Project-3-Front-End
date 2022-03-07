@@ -207,11 +207,17 @@ const App = () => {
     setShowNavMenu(!showNavMenu)
     const menuEl = document.getElementById('menu-content')
     if(menuEl.style.right === "0px") { //if already open
-      menuEl.style.right = "-80%"
+      menuEl.style.right = "-90%"
       menuEl.style.boxShadow = "none"
+      menuEl.style.borderBottomLeftRadius = "0px"
+      menuEl.style.borderTopLeftRadius = "0px"
+
     } else {
       menuEl.style.right = "0px"
       menuEl.style.boxShadow = "-1px 1px 20px purple"
+      menuEl.style.borderBottomLeftRadius = "50%"
+      menuEl.style.borderTopLeftRadius = "20%"
+
     }
     if (showNewCharacterForm) {
       setShowNewCharacterForm(!showNewCharacterForm)

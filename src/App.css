@@ -99,10 +99,12 @@ header {
   border:3px solid #e7d767;
   box-shadow:3px 3px 3px #b73b3b;
   height: 100%;
+  padding: 0.5em;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   z-index: -1;
+  border-radius: 5px;
 }
 
 .card h3 {
@@ -184,9 +186,9 @@ a {
 }
 
 #menu-content {
-  width: 80%;
+  width: 90%;
   position: fixed;
-  right: -80%;
+  right: -90%;
   top: 15vh;
   z-index: 2;
   background-color: #f68021;
@@ -194,7 +196,7 @@ a {
   font-size: 1.5em;
   font-weight: bold;
   text-shadow: 1px 1px 5px purple;
-  transition: all .4s ease-in;
+  transition: all .8s linear;
 }
 
 #menu-content li {
@@ -216,4 +218,10 @@ a {
 
 table {
   z-index: -2;
+}
+
+@media (min-width: 800px) {
+  #menu-content {
+    width: 40%;
+  }
 }
