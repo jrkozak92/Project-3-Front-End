@@ -324,9 +324,9 @@ const App = () => {
               Name: <input type="text" placeholder="Bender Bending Rodriguez" onChange={handleNewCharacterName}/><br/>
               Image URL: <input type="text" placeholder="image path here" onChange={handleNewCharacterImage}/><br/>
               Quote: <input type="text" placeholder="Bite my shiny, metal ass!" onChange={handleNewCharacterQuote}/><br/>
-              <input type="submit" value="Add this new character" /><br/>
+              <input className="btn" type="submit" value="Add this new character" /><br/>
             </form>
-            <button onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Cancel</button>
+            <button className="btn" onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Cancel</button>
           </section> :
           <ul>
             {toggleLogout ?
@@ -335,9 +335,9 @@ const App = () => {
                 <span className="nav-link" onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Add New Character</span>
               </li>
               <li >
-                <a className="nav-link" onClick={handleToggleNavMenu} href="#episodes-section">List of Episodes</a>
+                <a className="nav-link" onClick={handleToggleNavMenu} href="#end-of-characters-separator">List of Episodes</a>
               </li>
-              <button onClick={handleLogout}>Logout</button>
+              <button className="btn" onClick={handleLogout}>Logout</button>
             </> :
             <>
               <li>
@@ -350,7 +350,7 @@ const App = () => {
                         :
                       null
                     }
-                    <input type="submit" value="Login"/>
+                    <input className="btn" type="submit" value="Login"/>
                   </form>
                   :
                   <form onSubmit={handleCreateUser}>
@@ -361,10 +361,10 @@ const App = () => {
                         :
                       null
                     }
-                    <input type="submit" value="Create Account"/>
+                    <input type="submit" className="btn" value="Create Account"/>
                   </form>
                 }
-                <button onClick={handleToggleLoginForm}>{toggleLogin ? 'Need an Account?' : 'Already have an account?'}</button>
+                <button className="btn" onClick={handleToggleLoginForm}>{toggleLogin ? 'Need an Account?' : 'Already have an account?'}</button>
               </li>
             </>
             }
@@ -422,29 +422,30 @@ const App = () => {
                 null
               }
               </div>
+              <div id="end-of-characters-separator"></div>
             </section>
             <section id="episodes-section">
-              <h2 className="episodes-section-header">Futurama Episode Information</h2>
-                <div className="container">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Episode</th>
-                        <th>Title</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {episodes.map((ep) => {
-                        return (
-                          <tr key={ep.id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
-                            <td>{ep.episodeNum}</td>
-                            <td>{ep.title}</td>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+              <h2 id="episodes-section-header">Futurama Episode Information</h2>
+              <div className="container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Episode</th>
+                      <th>Title</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {episodes.map((ep) => {
+                      return (
+                        <tr key={ep.id} className="hoverable" onClick={()=> {handleShowEpInfo(ep)}}>
+                          <td>{ep.episodeNum}</td>
+                          <td>{ep.title}</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
               {
               showEpisodeInfo === selectedEp.id ?
                 <div className="whole-modal">

@@ -24,7 +24,7 @@ header {
   height: 15vh;
   position: sticky;
   top: 0;
-  z-index: 0;
+  z-index: 1;
   box-sizing: border-box;
 }
 
@@ -87,6 +87,7 @@ header {
   flex-flow: row wrap;
   align-items: space-between;
   row-gap: 1em;
+  /* z-index: -3; */
 }
 
 /* .col {
@@ -103,7 +104,7 @@ header {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-  z-index: -1;
+  /* z-index: -1; */
   border-radius: 5px;
 }
 
@@ -113,6 +114,10 @@ header {
 
 .card h5 {
   font-size: 1.25em;
+}
+
+.card:hover {
+  cursor: pointer;
 }
 
 .edit-card-content {
@@ -125,12 +130,18 @@ header {
   object-position: top;
 }
 
-.episodes-section-header {
+#end-of-characters-separator {
+  height: 15vh;
+  width: 100%;
+}
+
+#episodes-section-header {
   position: sticky;
   top: 15vh;
   background-color: #68e295;
   margin: 0;
-  z-index: -1;
+  /* margin-bottom: 2em; */
+  /* z-index: -1; */
 }
 
 .whole-modal {
@@ -139,8 +150,11 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  z-index: 2;
 }
 
 .episode-modal {
@@ -158,23 +172,21 @@ header {
 .episode-modal-content {
   min-width: 50%;
   max-width: 85%;
-  max-height: 100%;
+  max-height: 100vh;
   padding: 1em;
   background-color: #c32040;
   border: 3px solid #e7d767;
   border-radius: 10px;
   z-index: 100;
   box-shadow:3px 3px 3px #b73b3b;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-evenly;
-  align-items: center;
+  text-align: center;
   overflow: auto;
   position: relative;
 }
 
 .episode-modal-content p {
   width: 80%;
+  margin: 0 auto;
 }
 
 a {
@@ -193,10 +205,11 @@ a {
   z-index: 2;
   background-color: #f68021;
   padding: 1em;
+  padding-left: 3em;
   font-size: 1.5em;
   font-weight: bold;
   text-shadow: 1px 1px 5px purple;
-  transition: all .8s linear;
+  transition: all .4s ease-out;
 }
 
 #menu-content li {
@@ -216,8 +229,8 @@ a {
   width: 100%;
 }
 
-table {
-  z-index: -2;
+.btn {
+  margin: 0.25em 0;
 }
 
 @media (min-width: 800px) {
