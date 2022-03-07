@@ -21,7 +21,7 @@ header {
   background-color:#379362;
   border-bottom:5px solid #b73b3b;
   color:white;
-  max-height: 15vh;
+  height: 15vh;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -190,6 +190,8 @@ a {
   font-size: 1.5em;
   font-weight: bold;
   text-shadow: 1px 1px 5px purple;
+  transition: all .4s ease-in;
+  box-shadow: -1px 1px 20px purple;
 }
 
 #menu-content li {

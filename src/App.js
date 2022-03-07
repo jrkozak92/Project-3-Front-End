@@ -303,7 +303,7 @@ const App = () => {
                     <div key={char._id} className="col s12 m6 l4 xl3">
                       <div  className="card edit-card">
                         <div className="edit-card-content">
-                          <h2>Edit {char.name}</h2>
+                          <h3>Edit {char.name}</h3>
                           <form onSubmit={(event)=> {handleEditFormSubmit(char, event)}}>
                             Name: <input type="text" value={editCharacterName} onChange={handleEditCharacterName}/><br/>
                             Image URL: <input type="text" value={editCharacterImage} onChange={handleEditCharacterImage}/><br/>
