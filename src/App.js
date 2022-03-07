@@ -413,7 +413,7 @@ const App = () => {
                     <div key={char._id} className="col s12 m6 l6 xl4">
                       <div  className="card character-card hoverable" onClick={()=> {handleShowEditForm(char)}}>
                         <img src={char.image} className="character-image responsive-img" />
-                        <h3>{char.name}</h3>
+                        <h3 className="aliense-on-hover">{char.name}</h3>
                         <h5>"{char.quote}"</h5>
                         <button className="btn delete" onClick={()=> {handleDeleteCharacter(char)}}>Delete {char.name}. (Cannot be undone.)</button>
                       </div>
