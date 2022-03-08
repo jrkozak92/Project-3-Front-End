@@ -9,7 +9,7 @@ Create-react-app was used to generate our staring code, we then took the reigns 
 Express, Node, bcrypt, express-sessions, CORS, dotenv, and the MVC Design pattern were used server side with Mongo/Mongoose and MongoDB Atlas Cloud DB as data storage. Express, Node, bcrypt, express-sessions, CORS, Mongoose, Atlas, and dotenv were used to implement user creation and authorization, while Mongoose and Atlas managed data hanlding and delivery. A custom Express API was implemented using various controllers to deliver data based on routes. 
 
 ### 3rd Party API
-#####https://www.sampleapis.com/api-list/futurama
+##### https://www.sampleapis.com/api-list/futurama
 We used this API to seed data and populate our database with real Futurama data!
 
 ### Deployment
