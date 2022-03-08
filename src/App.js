@@ -52,8 +52,8 @@ loader.load().then(function (google) {
             })
           })
     })
-  
-  
+
+
 });
 
 const App = () => {
@@ -61,9 +61,9 @@ const App = () => {
   // var map = null;
   // function initMap() {
   //   navigator.geolocation.getCurrentPosition((position) => {
-  //     userLocation = { 
-  //       lat: position.coords.latitude, 
-  //       lng: position.coords.longitude 
+  //     userLocation = {
+  //       lat: position.coords.latitude,
+  //       lng: position.coords.longitude
   //     };
   //     // The map, centered at user location
   //     map = new google.maps.Map(document.getElementById("map"), {
@@ -266,6 +266,7 @@ const App = () => {
           setErrorMessage('')
           setCurrentUser(response.data)
           handleToggleLogout()
+          handleToggleNavMenu()
         } else {
           console.log(response);
           setToggleError(true)
@@ -377,8 +378,8 @@ const App = () => {
           </ul>
           }
         </div>
-          { showNavMenu ? 
-          <span className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">close</i></span> 
+          { showNavMenu ?
+          <span className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">close</i></span>
           :
           <span className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></span> }
       </header>
@@ -481,7 +482,7 @@ const App = () => {
       <h5 id="map-description">Each pin on the map represents a visitor to this site. Futurama fans exist all over the world!</h5>
       <div id="map"></div>
     </div>
-    
+
     </>
   )
 }
