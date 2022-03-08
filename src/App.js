@@ -316,7 +316,17 @@ const App = () => {
     <>
     <div>
       <header>
-        <img src="./futurama_logo.png" className="logo"/>
+        <div id='spacer'></div>
+        <ul id="credits">
+        By:
+          <li>
+            Nathan L Freeman
+          </li>
+          <li>
+            Joey R Kozak
+          </li>
+        </ul>
+
         {/* Conditionally render hamburger menu or full links menu */}
         <div id="menu-content">
           { showNewCharacterForm ?

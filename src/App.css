@@ -38,10 +38,15 @@ body {
 header {
   display:flex;
   flex-flow:row nowrap;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  align-content:center;
   width:100%;
   background-color:#379362;
+  background-image: url('../public/futurama_logo.png');
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
   border-bottom:5px solid #b73b3b;
   color:white;
   height: 15vh;
@@ -49,7 +54,19 @@ header {
   top: 0;
   z-index: 1;
   box-sizing: border-box;
+  padding:0 2vw;
 }
+
+#spacer {
+  width:84px;
+  height:84px;
+}
+
+#credits {
+  font-size:8px;
+  align-self:flex-end;
+}
+
 
 .logo {
   padding:1em;
@@ -155,10 +172,17 @@ h2 {
   cursor: pointer;
 }
 
+.aliense-on-hover{
+  transition: all .5s linear;
+  transform: scale(1)
+}
+
 .aliense-on-hover:hover {
   font-family: 'Futurama Alien Alphabet One', sans-serif;
   font-size: 28px;
-
+  text-shadow: 1px 1px 3px purple;
+  transition: all 1s linear;
+  transform: scale(1.2);
 }
 
 .edit-card-content {
@@ -301,11 +325,24 @@ a {
   h2 {
     font-size: 2.5em;
   }
+
+  #credits {
+
+  }
 }
 
 @media (min-width: 800px) {
   #menu-content {
     width: 40%;
+  }
+
+  #credits {
+    font-size:16px;
+    align-self:center;
+  }
+
+  #spacer {
+    display:none;
   }
 }
 
