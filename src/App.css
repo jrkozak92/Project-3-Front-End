@@ -12,6 +12,13 @@ font-family: 'Futurama Bold Font', sans-serif; */
   font-weight: normal;
   font-style: normal;
 }
+  
+@font-face {
+font-family: 'Insignia';
+font-style: normal;
+font-weight: normal;
+src: local('Insignia'), url('../public/Insignia.ttf') format('truetype');
+}
 
 * {
   margin: 0;
@@ -25,7 +32,7 @@ html {
 body {
   text-align: center;
   background-color:#68e295;
-  font-family: 'Futurama Bold Font', sans-serif;
+  font-family: 'Insignia', sans-serif;
 }
 
 header {
@@ -60,6 +67,17 @@ header {
 .nav-link:hover {
   transform: scale(1.2);
   text-shadow: 2px 2px 10px purple;
+}
+
+h2 {
+  margin: 0 auto;
+  font-size: 1.75em;
+}
+
+#title-text-container {
+  min-height: 15vh;
+  display: grid;
+  place-items: center;
 }
 
 .App-logo {
@@ -139,6 +157,8 @@ header {
 
 .aliense-on-hover:hover {
   font-family: 'Futurama Alien Alphabet One', sans-serif;
+  font-size: 28px;
+  
 }
 
 .edit-card-content {
@@ -240,21 +260,19 @@ a {
   margin: 0.5em auto;
 }
 
+#map-header {
+  padding: 15vh 2em 0;
+}
+
 #map {
-  height: 400px;
-  /* The height is 400 pixels */
+  height: calc( 67vh - 1em - 50px);
   width: 100%;
-  /* The width is the width of the web page */
   z-index: 0;
 }
 
 .google-map {
   height: 100%;
   width: 100%;
-}
-
-#characters-section h2 {
-  padding-top: 15vh;
 }
 
 .btn {
@@ -273,6 +291,18 @@ a {
   background: #f68021;
 }
 
+@media (min-width: 500px) and (max-width: 900px) {
+  #map {
+    height: calc( 70vh - 1em - 56px );
+  }
+}
+
+@media (min-width: 600px) {
+  h2 {
+    font-size: 2.5em;
+  }
+}
+
 @media (min-width: 800px) {
   #menu-content {
     width: 40%;
@@ -280,7 +310,16 @@ a {
 }
 
 @media (min-width: 900px) {
+  h2 {
+    font-size: 3.5em;
+  }
+
   .episode-modal-content {
     border-top-left-radius: 50%;
   }
+
+  #map {
+    margin-bottom: 2em;
+  }
+
 }

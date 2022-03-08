@@ -335,10 +335,13 @@ const App = () => {
                 <span className="nav-link" onClick={()=> {setShowNewCharacterForm(!showNewCharacterForm)}}>Add New Character</span>
               </li>
               <li>
-                <a className="nav-link" onClick={handleToggleNavMenu} href="#characters-section">List of Characters</a>
+                <a className="nav-link" onClick={handleToggleNavMenu} href="#title-text-container">List of Characters</a>
               </li>
               <li>
                 <a className="nav-link" onClick={handleToggleNavMenu} href="#end-of-characters-separator">List of Episodes</a>
+              </li>
+              <li>
+                <a className="nav-link" onClick={handleToggleNavMenu} href="#map-header">Futurama Fan Map</a>
               </li>
               <button className="btn" onClick={handleLogout}>Logout</button>
             </> :
@@ -379,7 +382,9 @@ const App = () => {
           :
           <span className="hamburger-icon" onClick={handleToggleNavMenu}><i className="material-icons large">menu</i></span> }
       </header>
-      <div id="map"></div>
+      <div id="title-text-container">
+        <h2 id="title-text">Welcome to our Futurama Fan App!</h2>
+      </div>
       <main>
         {!currentUser.username ?
           <>
@@ -429,6 +434,7 @@ const App = () => {
             </section>
             <section id="episodes-section">
               <h2 id="episodes-section-header">Futurama Episode Information</h2>
+              <h5 id="episodes-section-subtext">"I am Melllvar! Seer of the Tapes! Knower of the Episodes!"</h5>
               <div className="container">
                 <table>
                   <thead>
@@ -470,6 +476,10 @@ const App = () => {
           </>
         }
       </main>
+      <h2 id="map-header">Futurama Fan Map</h2>
+      <h5>You're entering the vicinity of an area adjacent to a location...</h5>
+      <h5 id="map-description">Each pin on the map represents a visitor to this site. Futurama fans exist all over the world!</h5>
+      <div id="map"></div>
     </div>
     
     </>
