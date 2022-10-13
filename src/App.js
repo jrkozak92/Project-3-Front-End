@@ -5,6 +5,8 @@ import axios from 'axios'
 //The following package/link was shared by our instructor to help us get Google Maps markers working in this app: https://www.npmjs.com/package/google-maps
 //We had tried several other packages and ran into issues with all of them.
 import {Loader, LoaderOptions} from 'google-maps';
+
+const API_URL = 'https://futurama-back-end.onrender.com/'
 const options = {/* todo */};
 const loader = new Loader('AIzaSyDPi8JMfy1GZjzQpFq1sPqzVMm6ASBLBTs', options);
 let map = null
@@ -23,10 +25,10 @@ loader.load().then(function (google) {
         lng: position.coords.longitude
       }
       //axios post call to add new geolocation
-      axios.post('https://stormy-temple-25752.herokuapp.com/markers', {
+      axios.post(API_URL + 'markers', {
         coords: userLocation
       }).then(()=> {
-        axios.get('https://stormy-temple-25752.herokuapp.com/markers')
+        axios.get(API_URL + 'markers')
              .then((response) => {
                console.log(response.data)
                const markersArray = response.data
@@ -40,7 +42,7 @@ loader.load().then(function (google) {
       })
     }, (err) => {
       //axios get call to get array of marker objects
-      axios.get('https://stormy-temple-25752.herokuapp.com/markers')
+      axios.get(API_URL + 'markers')
            .then((response) => {
               console.log(response.data)
               const markersArray = response.data
@@ -107,17 +109,15 @@ const App = () => {
 
 
   // Index request
-  //https://stormy-temple-25752.herokuapp.com
   const updateAllCharacters = () => {
-    axios.get('https://stormy-temple-25752.herokuapp.com/characters').then((response) => {
+    axios.get(API_URL + 'characters').then((response) => {
       setCharacters(response.data)
     })
   }
 
-//https://stormy-temple-25752.herokuapp.com
   const handleNewCharacterFormSubmit = (e) => {
     e.preventDefault()
-    axios.post('https://stormy-temple-25752.herokuapp.com/characters',
+    axios.post(API_URL + 'characters',
     {
       name: newCharacterName,
       image: newCharacterImage,
@@ -129,9 +129,8 @@ const App = () => {
     })
   }
 
-//https://stormy-temple-25752.herokuapp.com
   const handleDeleteCharacter = (char) => {
-    axios.delete(`https://stormy-temple-25752.herokuapp.com/characters/${char._id}`)
+    axios.delete(API_URL + `characters/${char._id}`)
     .then(() => {
       updateAllCharacters()
     })
@@ -168,10 +167,9 @@ const App = () => {
   }
 
 
-//https://stormy-temple-25752.herokuapp.com
   const handleEditFormSubmit = (char, e) => {
     e.preventDefault()
-    axios.put(`https://stormy-temple-25752.herokuapp.com/characters/${char._id}`, {
+    axios.put(API_URL + `characters/${char._id}`, {
       name: editCharacterName,
       image: editCharacterImage,
       quote: editCharacterQuote
@@ -181,9 +179,9 @@ const App = () => {
       setEditFormId('')
     })
   }
-//https://stormy-temple-25752.herokuapp.com
+
   const getEpisodes = () => {
-    axios.get('https://stormy-temple-25752.herokuapp.com/episodes').then((response) => {
+    axios.get(API_URL + 'episodes').then((response) => {
       const rawData = response.data
       rawData.sort((a,b) => {
         if (a.id > b.id) return 1
@@ -224,7 +222,7 @@ const App = () => {
     }
   }
 
-//https://stormy-temple-25752.herokuapp.com
+
   const handleCreateUser = (event) => {
     event.preventDefault()
     event.currentTarget.reset()
@@ -234,7 +232,7 @@ const App = () => {
     }
     setUsername('')
     setPassword('')
-    axios.post('https://stormy-temple-25752.herokuapp.com/users', userObj)
+    axios.post(API_URL + 'users', userObj)
       .then((response) => {
         if (response.data.username) {
           console.log(response.data);
@@ -258,7 +256,7 @@ const App = () => {
     }
     setUsername('')
     setPassword('')
-    axios.post('https://stormy-temple-25752.herokuapp.com/sessions', userObj)
+    axios.post(API_URL + 'sessions', userObj)
       .then((response) => {
         if (response.data.username) {
           console.log(response.data)
