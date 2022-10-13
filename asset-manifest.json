@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/Project-3-Back-End/static/css/main.f8bfc921.css",
-    "main.js": "/Project-3-Back-End/static/js/main.067a4255.js",
-    "static/js/787.16cdc1bd.chunk.js": "/Project-3-Back-End/static/js/787.16cdc1bd.chunk.js",
-    "static/media/futurama_logo.png": "/Project-3-Back-End/static/media/futurama_logo.0fbaeedc6d5e28b333f1.png",
-    "static/media/fr-fal1.svg": "/Project-3-Back-End/static/media/fr-fal1.438be612545c68f876a0.svg",
-    "static/media/Insignia.ttf": "/Project-3-Back-End/static/media/Insignia.24bd7058a91a82f00c24.ttf",
-    "static/media/fr-fal1.eot?": "/Project-3-Back-End/static/media/fr-fal1.046f8f12543fd2bddd5b.eot",
-    "static/media/fr-fal1.ttf": "/Project-3-Back-End/static/media/fr-fal1.12640d974860c1948b74.ttf",
-    "static/media/fr-fal1.woff": "/Project-3-Back-End/static/media/fr-fal1.eaa683174b288ccf3cb4.woff",
-    "index.html": "/Project-3-Back-End/index.html",
-    "main.f8bfc921.css.map": "/Project-3-Back-End/static/css/main.f8bfc921.css.map",
-    "main.067a4255.js.map": "/Project-3-Back-End/static/js/main.067a4255.js.map",
-    "787.16cdc1bd.chunk.js.map": "/Project-3-Back-End/static/js/787.16cdc1bd.chunk.js.map"
+    "main.css": "/Project-3-Front-End/static/css/main.f19a491b.css",
+    "main.js": "/Project-3-Front-End/static/js/main.c85ba6db.js",
+    "static/js/787.16cdc1bd.chunk.js": "/Project-3-Front-End/static/js/787.16cdc1bd.chunk.js",
+    "static/media/futurama_logo.png": "/Project-3-Front-End/static/media/futurama_logo.0fbaeedc6d5e28b333f1.png",
+    "static/media/fr-fal1.svg": "/Project-3-Front-End/static/media/fr-fal1.438be612545c68f876a0.svg",
+    "static/media/Insignia.ttf": "/Project-3-Front-End/static/media/Insignia.24bd7058a91a82f00c24.ttf",
+    "static/media/fr-fal1.eot?": "/Project-3-Front-End/static/media/fr-fal1.046f8f12543fd2bddd5b.eot",
+    "static/media/fr-fal1.ttf": "/Project-3-Front-End/static/media/fr-fal1.12640d974860c1948b74.ttf",
+    "static/media/fr-fal1.woff": "/Project-3-Front-End/static/media/fr-fal1.eaa683174b288ccf3cb4.woff",
+    "index.html": "/Project-3-Front-End/index.html",
+    "main.f19a491b.css.map": "/Project-3-Front-End/static/css/main.f19a491b.css.map",
+    "main.c85ba6db.js.map": "/Project-3-Front-End/static/js/main.c85ba6db.js.map",
+    "787.16cdc1bd.chunk.js.map": "/Project-3-Front-End/static/js/787.16cdc1bd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f8bfc921.css",
-    "static/js/main.067a4255.js"
+    "static/css/main.f19a491b.css",
+    "static/js/main.c85ba6db.js"
   ]
 }
