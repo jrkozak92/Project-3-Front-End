@@ -1,5 +1,5 @@
 # Project 3 - Good News, Everyone!
-## https://shrouded-cove-05719.herokuapp.com/
+## https://bones81.github.io/Futurama-FE/
 
 ## Technologies Used
 ### Front-End
